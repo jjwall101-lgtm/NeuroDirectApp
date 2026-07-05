@@ -1,0 +1,19 @@
+NEURODIRECT — GITHUB UPLOAD NOTES
+
+1. Open your GitHub repository.
+2. Press Add file.
+3. Press Upload files.
+4. Upload all files from this package into the root of the repo.
+5. Do not put them inside a folder.
+6. Commit the changes.
+7. Go to Settings > Pages.
+8. Set Source to Deploy from a branch.
+9. Choose main branch and /root.
+10. Save.
+
+Your app should then load from your GitHub Pages link.
+
+If the page still looks blank:
+- Make sure index.html is in the root of the repo.
+- Make sure style.css and script.js are also in the root.
+- Make sure the file is called index.html exactly, all lowercase.

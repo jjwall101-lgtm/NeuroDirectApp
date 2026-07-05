@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#3b7f5b">
+    <meta name="description" content="NeuroDirect family step tracking app">
+    <title>NeuroDirect</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icon-192.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="app">
+        <header class="app-header">
+            <div class="brand-mark" aria-hidden="true">ND</div>
+            <div>
+                <h1>NeuroDirect</h1>
+                <p>Family step goals, progress and simple daily tracking.</p>
+            </div>
+        </header>
+
+        <div id="errorBox" class="error-box" role="alert"></div>
+
+        <section id="homeScreen" class="screen active" aria-label="Home screen">
+            <div class="card hero-card">
+                <div class="hero-copy">
+                    <span class="eyebrow">Today</span>
+                    <h2>Family Overview</h2>
+                    <p>Track everyone’s progress in one simple place.</p>
+                </div>
+                <div class="hero-stat">
+                    <strong id="totalStepsText">0</strong>
+                    <span>steps</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div id="leaderboard"></div>
+
+                <div class="section-title">Members</div>
+                <div id="memberList"></div>
+
+                <button id="addMemberBtn" type="button">Add Member</button>
+                <button id="resetTodayBtn" type="button" class="secondary">Reset Today’s Steps</button>
+                <button id="resetAllBtn" type="button" class="danger">Reset All Data</button>
+            </div>
+        </section>
+
+        <section id="editScreen" class="screen" aria-label="Add or edit member screen">
+            <div class="card">
+                <h2 id="editTitle">Add Member</h2>
+                <p class="card-subtitle" id="editSubtitle">Create a family profile and set a daily step goal.</p>
+
+                <label for="nameInput">Name</label>
+                <input id="nameInput" type="text" placeholder="e.g. Jay" autocomplete="off">
+
+                <label for="roleInput">Role</label>
+                <select id="roleInput">
+                    <option value="Parent">Parent</option>
+                    <option value="Kid">Kid</option>
+                    <option value="Teen">Teen</option>
+                </select>
+
+                <label for="goalInput">Daily Step Goal</label>
+                <input id="goalInput" type="number" inputmode="numeric" min="1" placeholder="e.g. 6000">
+
+                <button id="saveMemberBtn" type="button">Save Member</button>
+                <button id="cancelEditBtn" type="button" class="secondary">Cancel</button>
+            </div>
+        </section>
+
+        <section id="memberScreen" class="screen" aria-label="Member details screen">
+            <div class="card">
+                <div class="member-header">
+                    <div id="detailAvatar" class="member-avatar large-avatar"></div>
+                    <div>
+                        <h2 id="detailName"></h2>
+                        <p id="detailRole"></p>
+                    </div>
+                </div>
+
+                <div class="big-number" id="detailSteps">0</div>
+                <div class="muted" id="detailGoalText">0 / 0 steps</div>
+
+                <div class="progress-bar">
+                    <div id="detailProgress" class="progress-fill"></div>
+                </div>
+
+                <div class="progress-meta">
+                    <span id="detailPercent">0% complete</span>
+                    <span id="detailRemaining">0 left</span>
+                </div>
+
+                <div id="detailBadge"></div>
+
+                <div class="section-title">Add Steps</div>
+
+                <div class="quick-add-grid">
+                    <button class="quickAddBtn" type="button" data-amount="500">+500</button>
+                    <button class="quickAddBtn" type="button" data-amount="1000">+1,000</button>
+                    <button class="quickAddBtn" type="button" data-amount="2500">+2,500</button>
+                </div>
+
+                <label for="addStepsInput">Custom Amount</label>
+                <input id="addStepsInput" type="number" inputmode="numeric" min="1" placeholder="Add steps">
+
+                <button id="addStepsBtn" type="button">Add Steps</button>
+
+                <div class="section-title">7-Day History</div>
+                <div id="historyList"></div>
+
+                <button id="editMemberBtn" type="button" class="secondary">Edit Member</button>
+                <button id="deleteMemberBtn" type="button" class="danger">Delete Member</button>
+                <button id="backHomeBtn" type="button" class="secondary">Back</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
