@@ -1,31 +1,35 @@
-const CACHE_NAME = "neurodirect-cache-v9.0.0";
+const CACHE_NAME = "neurodirect-cache-v10.0.0";
 const APP_FILES = [
   "./",
-  "./index.html?v=9",
+  "./index.html?v=10",
   "./index.html",
-  "./style.css?v=9",
+  "./style.css?v=10",
   "./style.css",
   "./script.js",
+  "./firebase-config.js",
+  "./firebase-profiles.js",
+  "./FIREBASE_SETUP.md",
+  "./firestore.rules",
   "./manifest.json",
   "./header-logo.png",
   "./approved-lockup.png",
-  "./approved-icon.png?v=9",
+  "./approved-icon.png?v=10",
   "./approved-icon.png",
   "./logo.svg",
-  "./favicon.ico?v=9",
+  "./favicon.ico?v=10",
   "./favicon.ico",
-  "./apple-touch-icon.png?v=9",
+  "./apple-touch-icon.png?v=10",
   "./apple-touch-icon.png",
-  "./icon-48.png?v=9",
-  "./icon-72.png?v=9",
-  "./icon-96.png?v=9",
-  "./icon-128.png?v=9",
-  "./icon-144.png?v=9",
-  "./icon-152.png?v=9",
-  "./icon-180.png?v=9",
-  "./icon-192.png?v=9",
-  "./icon-384.png?v=9",
-  "./icon-512.png?v=9",
+  "./icon-48.png?v=10",
+  "./icon-72.png?v=10",
+  "./icon-96.png?v=10",
+  "./icon-128.png?v=10",
+  "./icon-144.png?v=10",
+  "./icon-152.png?v=10",
+  "./icon-180.png?v=10",
+  "./icon-192.png?v=10",
+  "./icon-384.png?v=10",
+  "./icon-512.png?v=10",
   "./icon-48.png",
   "./icon-72.png",
   "./icon-96.png",
@@ -64,7 +68,7 @@ self.addEventListener("fetch", (event) => {
           caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
           return response;
         })
-        .catch(() => caches.match("./index.html?v=9").then((cached) => cached || caches.match("./index.html")))
+        .catch(() => caches.match("./index.html?v=10").then((cached) => cached || caches.match("./index.html")))
     );
     return;
   }

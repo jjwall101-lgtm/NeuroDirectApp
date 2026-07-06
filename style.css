@@ -620,3 +620,62 @@ textarea { resize: vertical; }
     border-radius:13px !important;
   }
 }
+
+
+/* v10 Firebase profile panel */
+.firebase-profile-panel{
+  margin-bottom:1rem;
+}
+
+.firebase-auth-grid{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0, 1fr));
+  gap:1rem;
+  margin-top:1rem;
+}
+
+.firebase-help{
+  display:flex;
+  flex-direction:column;
+  gap:.35rem;
+  padding:1rem;
+  border-radius:18px;
+  border:1px solid var(--divider);
+  background:rgba(59,130,246,.08);
+  color:var(--text);
+}
+
+.firebase-help code,
+.small-print code{
+  font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size:.86em;
+}
+
+.firebase-signed-in{
+  margin-top:1rem;
+}
+
+.cloud-card{
+  margin-bottom:1rem;
+}
+
+.hidden{
+  display:none !important;
+}
+
+.muted{
+  color:var(--muted);
+  margin:.25rem 0 0;
+}
+
+.small-print{
+  color:var(--muted);
+  font-size:.86rem;
+  margin-top:1rem;
+}
+
+@media (max-width: 800px){
+  .firebase-auth-grid{
+    grid-template-columns:1fr;
+  }
+}

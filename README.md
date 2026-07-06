@@ -1,14 +1,38 @@
-# NeuroDirect (v9 — inline approved header)
+# NeuroDirect (v10 — Firebase user profiles)
 
-This package keeps the working Android launcher icon and fixes the in-app header by embedding the exact approved logo icon inline in the HTML.
+This version adds Firebase-ready user profiles while keeping the existing local app features.
 
-## Fixed in this version
+## Added
 
-- Header now uses the exact approved icon.
-- The header icon is embedded directly in HTML as a data URI, so no separate image request can be cached incorrectly.
-- Launcher icon remains unchanged.
-- Cache version updated to `neurodirect-cache-v9.0.0`.
+- Firebase Authentication panel in Settings
+- Email/password sign-up
+- Email/password sign-in
+- Sign-out
+- Firestore user profile document at `users/{uid}`
+- Save profile summary to cloud
+- Load profile name from cloud
+- Firebase config placeholder file
+- Firestore security rules
+- Firebase setup guide
 
-## Upload
+## Important
 
-Delete all old repo files, then upload every file in this package to the root of the GitHub Pages repo.
+Firebase is disabled until you paste your real Firebase config into:
+
+`firebase-config.js`
+
+Then change:
+
+`firebaseEnabled = false`
+
+to:
+
+`firebaseEnabled = true`
+
+## Files to upload
+
+Upload everything in this ZIP to your GitHub Pages repo root.
+
+## Default parent PIN
+
+`1234`
