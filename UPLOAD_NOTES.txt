@@ -1,28 +1,23 @@
-NEURODIRECT UPLOAD NOTES
+NeuroDirect upload notes (v3 — logo fixed)
 
-Upload these files into the ROOT of your GitHub repository:
+This package replaces the old logo with the selected premium ND neural logo.
 
-index.html
-style.css
-script.js
-manifest.json
-sw.js
-logo.svg
-icon-192.png
-icon-512.png
-README.md
-UPLOAD_NOTES.txt
+Upload steps:
+1. Delete every old file from the GitHub repo root.
+2. Upload every file from this package into the repo root.
+3. Make sure these files are included:
+   - index.html
+   - style.css
+   - script.js
+   - manifest.json
+   - sw.js
+   - logo.svg
+   - logo.png
+   - icon-192.png
+   - icon-512.png
+   - README.md
+   - .nojekyll
+4. GitHub Pages should be set to main branch / root.
+5. Wait for GitHub Pages to rebuild, then refresh Chrome.
 
-Do not put them inside an assessment folder or any other folder.
-
-Default parent PIN: 1234
-
-After GitHub Pages is enabled, open the published link on the phone.
-On Android/Chrome, use:
-Menu → Add to Home screen → Install
-
-If the app does not update after you upload changes:
-1. Open the app link in Chrome.
-2. Refresh it a few times.
-3. If needed, clear site data for that GitHub Pages site.
-4. Future versions can also update the cache name inside sw.js.
+This version uses cache name: neurodirect-cache-v3.0.0

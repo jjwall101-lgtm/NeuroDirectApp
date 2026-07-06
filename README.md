@@ -1,4 +1,5 @@
-# NeuroDirect
+# NeuroDirect (v3 — logo fixed)
+
 
 NeuroDirect is a clean, premium, installable web app for teenagers aged 13–17. It is designed for focus support, wellbeing check-ins, planning, rewards and parent/carer overview.
 
@@ -10,7 +11,7 @@ NeuroDirect is a clean, premium, installable web app for teenagers aged 13–17.
 - `manifest.json` — installable PWA setup
 - `sw.js` — offline cache/service worker
 - `logo.svg` — NeuroDirect logo
-- `icon-192.png` and `icon-512.png` — app icons
+- `icon-192.png` and `icon-512.png` — app icons using the ND neural logo
 - `UPLOAD_NOTES.txt` — simple upload instructions
 
 ## Features
