@@ -1,19 +1,5 @@
-NeuroDirect v11 upload notes — FIREBASE CONFIGURED
+NeuroDirect FULL REWRITE v12
 
-Your Firebase config has already been inserted into firebase-config.js.
+Unzip this package. Upload every file inside it into your GitHub repo root. Commit changes.
 
-Upload steps:
-1. Upload every file from this ZIP to your GitHub repo root.
-2. Overwrite old files when GitHub asks.
-3. Wait 1-2 minutes for GitHub Pages.
-4. Open the app.
-5. Go to Settings.
-6. Try creating a Firebase profile.
-
-Still required in Firebase:
-- Enable Authentication → Email/Password
-- Create Firestore Database
-- Publish the rules from firestore.rules
-
-Cache version:
-neurodirect-cache-v11.0.0
+Key files: index.html, style.css, script.js, firebase-config.js, firebase-profiles.js, sw.js, manifest.json, firestore.rules.
