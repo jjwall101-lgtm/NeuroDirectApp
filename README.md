@@ -1,13 +1,13 @@
-# NeuroDirect (v8 — no header image)
+# NeuroDirect (v9 — inline approved header)
 
-This package keeps the working Android launcher icon but removes the problematic header image entirely.
+This package keeps the working Android launcher icon and fixes the in-app header by embedding the exact approved logo icon inline in the HTML.
 
 ## Fixed in this version
 
-- The in-app header logo is now built with CSS and text, not an image file.
-- This prevents Chrome/Samsung Internet from loading a cached, broken, cropped, or wrong logo file.
-- Android launcher icon remains unchanged.
-- Cache version updated to `neurodirect-cache-v8.0.0`.
+- Header now uses the exact approved icon.
+- The header icon is embedded directly in HTML as a data URI, so no separate image request can be cached incorrectly.
+- Launcher icon remains unchanged.
+- Cache version updated to `neurodirect-cache-v9.0.0`.
 
 ## Upload
 
