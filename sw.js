@@ -1,30 +1,31 @@
-const CACHE_NAME = "neurodirect-cache-v5.0.0";
+const CACHE_NAME = "neurodirect-cache-v6.0.0";
 const APP_FILES = [
   "./",
-  "./index.html?v=5",
+  "./index.html?v=6",
   "./index.html",
-  "./style.css?v=5",
+  "./style.css?v=6",
   "./style.css",
   "./script.js",
   "./manifest.json",
   "./header-logo.png",
   "./approved-lockup.png",
+  "./approved-icon.png?v=6",
   "./approved-icon.png",
   "./logo.svg",
-  "./favicon.ico?v=5",
+  "./favicon.ico?v=6",
   "./favicon.ico",
-  "./apple-touch-icon.png?v=5",
+  "./apple-touch-icon.png?v=6",
   "./apple-touch-icon.png",
-  "./icon-48.png?v=5",
-  "./icon-72.png?v=5",
-  "./icon-96.png?v=5",
-  "./icon-128.png?v=5",
-  "./icon-144.png?v=5",
-  "./icon-152.png?v=5",
-  "./icon-180.png?v=5",
-  "./icon-192.png?v=5",
-  "./icon-384.png?v=5",
-  "./icon-512.png?v=5",
+  "./icon-48.png?v=6",
+  "./icon-72.png?v=6",
+  "./icon-96.png?v=6",
+  "./icon-128.png?v=6",
+  "./icon-144.png?v=6",
+  "./icon-152.png?v=6",
+  "./icon-180.png?v=6",
+  "./icon-192.png?v=6",
+  "./icon-384.png?v=6",
+  "./icon-512.png?v=6",
   "./icon-48.png",
   "./icon-72.png",
   "./icon-96.png",
@@ -63,7 +64,7 @@ self.addEventListener("fetch", (event) => {
           caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
           return response;
         })
-        .catch(() => caches.match("./index.html?v=5").then((cached) => cached || caches.match("./index.html")))
+        .catch(() => caches.match("./index.html?v=6").then((cached) => cached || caches.match("./index.html")))
     );
     return;
   }

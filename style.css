@@ -454,22 +454,27 @@ textarea { resize: vertical; }
 }
 
 
-/* v5 exact approved logo */
-.brand-lockup.exact-lockup{
-  display:flex;
-  align-items:center;
-  min-width:0;
-}
-.brand-lockup-image{
-  display:block;
-  height:40px;
-  width:auto;
-  max-width:min(58vw, 280px);
-  object-fit:contain;
+
+
+/* v6 header logo fix */
+.brand-mark{
+  width:54px;
+  height:54px;
+  border-radius:16px;
+  object-fit:cover;
+  flex:0 0 auto;
+  box-shadow:0 14px 28px rgba(15,23,42,.14);
 }
 @media (max-width: 600px){
-  .brand-lockup-image{
-    height:34px;
-    max-width:52vw;
+  .brand-mark{
+    width:46px;
+    height:46px;
+    border-radius:14px;
+  }
+  .brand-lockup h1{
+    font-size:1.05rem;
+  }
+  .brand-lockup p{
+    font-size:.74rem;
   }
 }

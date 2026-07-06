@@ -1,13 +1,13 @@
-# NeuroDirect (v5 — exact approved logo)
+# NeuroDirect (v6 — header fixed)
 
-This package uses the exact approved NeuroDirect logo artwork.
+This package keeps the corrected approved home-screen icon and fixes the remaining in-app header logo issue.
 
 ## Fixed in this version
 
-- Uses the exact approved icon artwork for all app icons.
-- Uses the exact approved NeuroDirect lockup in the app header.
-- Replaced the previous traced/approximate icon.
-- Updated cache version to `neurodirect-cache-v5.0.0`.
+- Home-screen icon still uses the exact approved NeuroDirect icon.
+- App header now uses the exact approved icon plus clean live text.
+- Removed the full-image header lockup to stop cropping, squashing, or blank logo display.
+- Updated cache version to `neurodirect-cache-v6.0.0`.
 
 ## Upload
 

@@ -1,12 +1,14 @@
-NeuroDirect v5 upload notes — EXACT APPROVED LOGO
+NeuroDirect v6 upload notes — HEADER FIXED
 
 1. Delete all old files from the repo root.
 2. Upload every file from this ZIP to the repo root.
 3. Wait for GitHub Pages to finish deploying.
-4. Open the site in Chrome.
-5. Delete the old home-screen NeuroDirect icon.
-6. Add the site to the home screen again.
+4. Open the site in Chrome and refresh.
+5. If the installed app still shows old graphics, delete the home-screen NeuroDirect shortcut and add it again.
 
-This package uses the exact approved logo you selected.
+Fixed:
+- launcher icon
+- in-app header logo
+- cache version
 
-Cache version: neurodirect-cache-v5.0.0
+Cache version: neurodirect-cache-v6.0.0
