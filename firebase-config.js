@@ -1,15 +1,13 @@
 // NeuroDirect Firebase config
-// Replace the placeholder values below with your Firebase Web App config.
-// Firebase Console -> Project settings -> General -> Your apps -> Web app config
 
 export const firebaseConfig = {
-  apiKey: "PASTE_YOUR_API_KEY_HERE",
-  authDomain: "PASTE_YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "PASTE_YOUR_PROJECT_ID",
-  storageBucket: "PASTE_YOUR_PROJECT_ID.firebasestorage.app",
-  messagingSenderId: "PASTE_YOUR_MESSAGING_SENDER_ID",
-  appId: "PASTE_YOUR_APP_ID"
+  apiKey: "AIzaSyCoJHKveHkA5U3W0IH5HWBBIqre3bOrhps",
+  authDomain: "neurodirect-d62be.firebaseapp.com",
+  projectId: "neurodirect-d62be",
+  storageBucket: "neurodirect-d62be.firebasestorage.app",
+  messagingSenderId: "424536202558",
+  appId: "1:424536202558:web:c08d1bf1fbebfc1ca4a06f",
+  measurementId: "G-K67S0RT7EM"
 };
 
-// Keep false until your real Firebase config is pasted above.
-export const firebaseEnabled = false;
+export const firebaseEnabled = true;

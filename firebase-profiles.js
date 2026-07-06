@@ -1,4 +1,4 @@
-import { firebaseConfig, firebaseEnabled } from "./firebase-config.js?v=10";
+import { firebaseConfig, firebaseEnabled } from "./firebase-config.js?v=11";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import {
   getAuth,

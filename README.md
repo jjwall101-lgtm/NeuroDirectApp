@@ -1,38 +1,33 @@
-# NeuroDirect (v10 — Firebase user profiles)
+# NeuroDirect (v11 — Firebase configured)
 
-This version adds Firebase-ready user profiles while keeping the existing local app features.
+This version has your Firebase config already inserted and Firebase enabled.
 
-## Added
+## Firebase project
 
-- Firebase Authentication panel in Settings
+Project ID:
+
+`neurodirect-d62be`
+
+## Included
+
+- Firebase Authentication user profiles
 - Email/password sign-up
 - Email/password sign-in
 - Sign-out
 - Firestore user profile document at `users/{uid}`
 - Save profile summary to cloud
 - Load profile name from cloud
-- Firebase config placeholder file
-- Firestore security rules
-- Firebase setup guide
+- Firebase config already added
+- Firestore rules included
 
-## Important
+## Still required in Firebase Console
 
-Firebase is disabled until you paste your real Firebase config into:
+You still need to make sure these are enabled in Firebase:
 
-`firebase-config.js`
+1. Authentication → Sign-in method → Email/Password → Enabled
+2. Firestore Database → Created
+3. Firestore Rules → Published using `firestore.rules`
 
-Then change:
+## Upload
 
-`firebaseEnabled = false`
-
-to:
-
-`firebaseEnabled = true`
-
-## Files to upload
-
-Upload everything in this ZIP to your GitHub Pages repo root.
-
-## Default parent PIN
-
-`1234`
+Upload every file in this ZIP to the root of your GitHub Pages repo.
