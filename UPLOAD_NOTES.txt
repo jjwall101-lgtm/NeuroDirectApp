@@ -1,23 +1,12 @@
-NeuroDirect upload notes (v3 — logo fixed)
+NeuroDirect v5 upload notes — EXACT APPROVED LOGO
 
-This package replaces the old logo with the selected premium ND neural logo.
+1. Delete all old files from the repo root.
+2. Upload every file from this ZIP to the repo root.
+3. Wait for GitHub Pages to finish deploying.
+4. Open the site in Chrome.
+5. Delete the old home-screen NeuroDirect icon.
+6. Add the site to the home screen again.
 
-Upload steps:
-1. Delete every old file from the GitHub repo root.
-2. Upload every file from this package into the repo root.
-3. Make sure these files are included:
-   - index.html
-   - style.css
-   - script.js
-   - manifest.json
-   - sw.js
-   - logo.svg
-   - logo.png
-   - icon-192.png
-   - icon-512.png
-   - README.md
-   - .nojekyll
-4. GitHub Pages should be set to main branch / root.
-5. Wait for GitHub Pages to rebuild, then refresh Chrome.
+This package uses the exact approved logo you selected.
 
-This version uses cache name: neurodirect-cache-v3.0.0
+Cache version: neurodirect-cache-v5.0.0

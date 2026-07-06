@@ -452,3 +452,24 @@ textarea { resize: vertical; }
   .hero-panel h2, .section-title h2 { font-size: 2.3rem; }
   .quickCheckBtn { display: none; }
 }
+
+
+/* v5 exact approved logo */
+.brand-lockup.exact-lockup{
+  display:flex;
+  align-items:center;
+  min-width:0;
+}
+.brand-lockup-image{
+  display:block;
+  height:40px;
+  width:auto;
+  max-width:min(58vw, 280px);
+  object-fit:contain;
+}
+@media (max-width: 600px){
+  .brand-lockup-image{
+    height:34px;
+    max-width:52vw;
+  }
+}
