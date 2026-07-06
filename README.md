@@ -1,13 +1,13 @@
-# NeuroDirect (v7 — use working icon)
+# NeuroDirect (v8 — no header image)
 
-This package keeps the working Android home-screen icon and forces the app header to use the exact same `icon-192.png` file.
+This package keeps the working Android launcher icon but removes the problematic header image entirely.
 
 ## Fixed in this version
 
-- Header no longer uses `approved-icon.png`.
-- Header uses `icon-192.png`, the same file that is already displaying correctly on the home screen.
-- Added strict CSS so the logo cannot stretch, crop, or distort.
-- Updated service-worker cache to `neurodirect-cache-v7.0.0`.
+- The in-app header logo is now built with CSS and text, not an image file.
+- This prevents Chrome/Samsung Internet from loading a cached, broken, cropped, or wrong logo file.
+- Android launcher icon remains unchanged.
+- Cache version updated to `neurodirect-cache-v8.0.0`.
 
 ## Upload
 

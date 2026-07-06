@@ -1,11 +1,14 @@
-NeuroDirect v7 upload notes — USE WORKING ICON
+NeuroDirect v8 upload notes — NO HEADER IMAGE
+
+This version removes the header image completely.
 
 1. Delete all old files from the repo root.
 2. Upload every file from this ZIP to the repo root.
 3. Wait for GitHub Pages to finish deploying.
-4. Open the site in Chrome and refresh.
+4. Open the site and refresh.
 
-This version forces the app header to use the same icon file that your home screen is already showing correctly.
+The launcher/home-screen icon stays as it was.
+The header logo is now CSS-only, so it cannot load the broken black/white image.
 
 Cache version:
-neurodirect-cache-v7.0.0
+neurodirect-cache-v8.0.0
