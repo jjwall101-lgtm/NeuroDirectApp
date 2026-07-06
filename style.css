@@ -478,3 +478,30 @@ textarea { resize: vertical; }
     font-size:.74rem;
   }
 }
+
+
+/* v7 final header icon fix */
+.brand-mark{
+  width:52px !important;
+  height:52px !important;
+  min-width:52px !important;
+  min-height:52px !important;
+  max-width:52px !important;
+  max-height:52px !important;
+  border-radius:14px !important;
+  object-fit:contain !important;
+  background:#0b1424 !important;
+  padding:0 !important;
+  display:block !important;
+}
+@media (max-width: 600px){
+  .brand-mark{
+    width:46px !important;
+    height:46px !important;
+    min-width:46px !important;
+    min-height:46px !important;
+    max-width:46px !important;
+    max-height:46px !important;
+    border-radius:13px !important;
+  }
+}
