@@ -1,24 +1,25 @@
 {
-    "name": "NeuroDirect",
-    "short_name": "NeuroDirect",
-    "description": "Family step goals, progress and simple daily tracking.",
-    "start_url": "index.html",
-    "display": "standalone",
-    "background_color": "#f4f1ed",
-    "theme_color": "#3b7f5b",
-    "orientation": "portrait-primary",
-    "icons": [
-        {
-            "src": "icon-192.png",
-            "sizes": "192x192",
-            "type": "image/png",
-            "purpose": "any maskable"
-        },
-        {
-            "src": "icon-512.png",
-            "sizes": "512x512",
-            "type": "image/png",
-            "purpose": "any maskable"
-        }
-    ]
+  "name": "NeuroDirect",
+  "short_name": "NeuroDirect",
+  "description": "A private teen focus, planning and wellbeing support app for ages 13–17.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#07111f",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
 }

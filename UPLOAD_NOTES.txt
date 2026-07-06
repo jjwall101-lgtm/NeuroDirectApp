@@ -1,19 +1,28 @@
-NEURODIRECT — GITHUB UPLOAD NOTES
+NEURODIRECT UPLOAD NOTES
 
-1. Open your GitHub repository.
-2. Press Add file.
-3. Press Upload files.
-4. Upload all files from this package into the root of the repo.
-5. Do not put them inside a folder.
-6. Commit the changes.
-7. Go to Settings > Pages.
-8. Set Source to Deploy from a branch.
-9. Choose main branch and /root.
-10. Save.
+Upload these files into the ROOT of your GitHub repository:
 
-Your app should then load from your GitHub Pages link.
+index.html
+style.css
+script.js
+manifest.json
+sw.js
+logo.svg
+icon-192.png
+icon-512.png
+README.md
+UPLOAD_NOTES.txt
 
-If the page still looks blank:
-- Make sure index.html is in the root of the repo.
-- Make sure style.css and script.js are also in the root.
-- Make sure the file is called index.html exactly, all lowercase.
+Do not put them inside an assessment folder or any other folder.
+
+Default parent PIN: 1234
+
+After GitHub Pages is enabled, open the published link on the phone.
+On Android/Chrome, use:
+Menu → Add to Home screen → Install
+
+If the app does not update after you upload changes:
+1. Open the app link in Chrome.
+2. Refresh it a few times.
+3. If needed, clear site data for that GitHub Pages site.
+4. Future versions can also update the cache name inside sw.js.

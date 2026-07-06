@@ -1,122 +1,439 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#3b7f5b">
-    <meta name="description" content="NeuroDirect family step tracking app">
-    <title>NeuroDirect</title>
-    <link rel="manifest" href="manifest.json">
-    <link rel="icon" href="icon-192.png">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="description" content="NeuroDirect is a private teen wellbeing, planning and focus support app for ages 13–17." />
+  <title>NeuroDirect</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icon-192.png" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <main class="app">
-        <header class="app-header">
-            <div class="brand-mark" aria-hidden="true">ND</div>
+  <div id="appShell" class="app-shell">
+    <header class="topbar">
+      <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open navigation">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="brand-lockup" aria-label="NeuroDirect home">
+        <img src="logo.svg" alt="NeuroDirect logo" class="brand-mark" />
+        <div>
+          <h1>NeuroDirect</h1>
+          <p>Teen focus & wellbeing hub</p>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <button class="ghost-btn" id="themeToggle" type="button" aria-label="Switch colour mode">Dark</button>
+        <button class="primary-btn compact" id="quickCheckBtn" type="button">Check in</button>
+      </div>
+    </header>
+
+    <aside class="side-nav" id="sideNav" aria-label="Main navigation">
+      <div class="profile-card small-card">
+        <div class="avatar-ring" id="avatarInitial">N</div>
+        <div>
+          <strong id="profileNameLabel">NeuroDirect</strong>
+          <span id="profileSubLabel">Private local profile</span>
+        </div>
+      </div>
+
+      <nav class="nav-list">
+        <button class="nav-item active" data-tab="dashboard">Dashboard</button>
+        <button class="nav-item" data-tab="checkin">Check-in</button>
+        <button class="nav-item" data-tab="planner">Planner</button>
+        <button class="nav-item" data-tab="focus">Focus</button>
+        <button class="nav-item" data-tab="toolkit">Toolkit</button>
+        <button class="nav-item" data-tab="rewards">Rewards</button>
+        <button class="nav-item" data-tab="parent">Parent view</button>
+        <button class="nav-item" data-tab="settings">Settings</button>
+      </nav>
+
+      <div class="safety-note">
+        <strong>Need urgent help?</strong>
+        <span>Talk to a trusted adult or call emergency services if someone is in danger.</span>
+      </div>
+    </aside>
+
+    <main class="content">
+      <section class="tab-panel active" id="dashboard">
+        <div class="hero-panel">
+          <div>
+            <p class="eyebrow">Today</p>
+            <h2 id="dashboardGreeting">Build the day in smaller steps.</h2>
+            <p class="hero-copy">Track mood, plan tasks, use quick reset tools, and keep a private progress record.</p>
+            <div class="hero-actions">
+              <button class="primary-btn" data-jump="checkin">Start today’s check-in</button>
+              <button class="secondary-btn" data-jump="planner">Plan my next step</button>
+            </div>
+          </div>
+          <div class="score-orb" aria-label="Today score">
+            <span id="todayScore">0</span>
+            <small>stability score</small>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="stat-card">
+            <span class="stat-label">Mood</span>
+            <strong id="dashMood">Not logged</strong>
+            <p id="dashMoodHint">Add a check-in to start the day.</p>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Energy</span>
+            <strong id="dashEnergy">—</strong>
+            <p>Useful for spotting patterns.</p>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Tasks done</span>
+            <strong id="dashTaskCount">0</strong>
+            <p>Small wins still count.</p>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Focus coins</span>
+            <strong id="dashCoins">0</strong>
+            <p>Earned from check-ins and completed tasks.</p>
+          </article>
+        </div>
+
+        <section class="panel split-panel">
+          <div>
+            <p class="eyebrow">Next best action</p>
+            <h3 id="nextActionTitle">Add one realistic task.</h3>
+            <p id="nextActionText">Choose something that takes under 10 minutes. Momentum beats perfect planning.</p>
+          </div>
+          <button class="primary-btn" data-jump="planner">Add task</button>
+        </section>
+
+        <section class="panel">
+          <div class="section-header">
             <div>
-                <h1>NeuroDirect</h1>
-                <p>Family step goals, progress and simple daily tracking.</p>
+              <p class="eyebrow">Recent notes</p>
+              <h3>Latest check-ins</h3>
             </div>
-        </header>
+            <button class="text-btn" data-jump="parent">View report</button>
+          </div>
+          <div id="recentCheckins" class="timeline-list empty-state">No check-ins yet.</div>
+        </section>
+      </section>
 
-        <div id="errorBox" class="error-box" role="alert"></div>
+      <section class="tab-panel" id="checkin">
+        <div class="section-title">
+          <p class="eyebrow">Daily check-in</p>
+          <h2>How are things right now?</h2>
+          <p>This is private on this device unless exported or shown to a parent/carer.</p>
+        </div>
 
-        <section id="homeScreen" class="screen active" aria-label="Home screen">
-            <div class="card hero-card">
-                <div class="hero-copy">
-                    <span class="eyebrow">Today</span>
-                    <h2>Family Overview</h2>
-                    <p>Track everyone’s progress in one simple place.</p>
-                </div>
-                <div class="hero-stat">
-                    <strong id="totalStepsText">0</strong>
-                    <span>steps</span>
-                </div>
+        <form id="checkinForm" class="panel form-grid">
+          <label>
+            Mood
+            <select id="moodInput" required>
+              <option value="Calm">Calm</option>
+              <option value="Okay">Okay</option>
+              <option value="Wired">Wired</option>
+              <option value="Low">Low</option>
+              <option value="Angry">Angry</option>
+              <option value="Overwhelmed">Overwhelmed</option>
+            </select>
+          </label>
+
+          <label>
+            Energy <span id="energyValue">5</span>/10
+            <input id="energyInput" type="range" min="1" max="10" value="5" />
+          </label>
+
+          <label>
+            Stress <span id="stressValue">5</span>/10
+            <input id="stressInput" type="range" min="1" max="10" value="5" />
+          </label>
+
+          <label>
+            Focus <span id="focusValue">5</span>/10
+            <input id="focusInput" type="range" min="1" max="10" value="5" />
+          </label>
+
+          <label>
+            Sleep quality
+            <select id="sleepInput">
+              <option value="Good">Good</option>
+              <option value="Okay">Okay</option>
+              <option value="Poor">Poor</option>
+              <option value="Very poor">Very poor</option>
+            </select>
+          </label>
+
+          <label>
+            School / home pressure
+            <select id="pressureInput">
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+            </select>
+          </label>
+
+          <label class="full-width">
+            What helped or made things harder?
+            <textarea id="noteInput" rows="4" placeholder="Example: noisy class, argument, forgot lunch, good walk, finished homework..."></textarea>
+          </label>
+
+          <label class="full-width checkbox-line">
+            <input id="shareFlagInput" type="checkbox" />
+            Flag this check-in for parent/carer view
+          </label>
+
+          <div class="form-actions full-width">
+            <button class="primary-btn" type="submit">Save check-in</button>
+            <button class="secondary-btn" type="button" id="resetCheckinBtn">Clear</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="tab-panel" id="planner">
+        <div class="section-title">
+          <p class="eyebrow">Planner</p>
+          <h2>Make the day manageable.</h2>
+          <p>Break homework, routines, chores, revision or social tasks into clear next steps.</p>
+        </div>
+
+        <form id="taskForm" class="panel task-form">
+          <label>
+            Task name
+            <input id="taskTitle" type="text" placeholder="Example: pack bag, revise science, shower" required />
+          </label>
+          <label>
+            Size
+            <select id="taskSize">
+              <option value="Tiny">Tiny — under 5 min</option>
+              <option value="Small">Small — 5–15 min</option>
+              <option value="Medium">Medium — 15–30 min</option>
+              <option value="Big">Big — needs breaking down</option>
+            </select>
+          </label>
+          <label>
+            Priority
+            <select id="taskPriority">
+              <option value="Normal">Normal</option>
+              <option value="Important">Important</option>
+              <option value="Urgent">Urgent</option>
+            </select>
+          </label>
+          <button class="primary-btn" type="submit">Add task</button>
+        </form>
+
+        <div class="board-grid">
+          <section class="panel">
+            <div class="section-header"><h3>To do</h3><span id="todoCount" class="pill">0</span></div>
+            <div id="todoList" class="task-list empty-state">No tasks added.</div>
+          </section>
+          <section class="panel">
+            <div class="section-header"><h3>Done</h3><span id="doneCount" class="pill">0</span></div>
+            <div id="doneList" class="task-list empty-state">No completed tasks yet.</div>
+          </section>
+        </div>
+      </section>
+
+      <section class="tab-panel" id="focus">
+        <div class="section-title">
+          <p class="eyebrow">Focus mode</p>
+          <h2>Start small. Stay direct.</h2>
+          <p>Use short focus blocks with reset breaks. No account, no tracking outside this device.</p>
+        </div>
+
+        <div class="focus-layout">
+          <section class="panel timer-panel">
+            <div class="timer-face" id="timerFace">10:00</div>
+            <p id="timerLabel">Ready for a 10-minute focus block.</p>
+            <div class="timer-buttons">
+              <button class="secondary-btn" data-minutes="5">5 min</button>
+              <button class="secondary-btn" data-minutes="10">10 min</button>
+              <button class="secondary-btn" data-minutes="20">20 min</button>
             </div>
-
-            <div class="card">
-                <div id="leaderboard"></div>
-
-                <div class="section-title">Members</div>
-                <div id="memberList"></div>
-
-                <button id="addMemberBtn" type="button">Add Member</button>
-                <button id="resetTodayBtn" type="button" class="secondary">Reset Today’s Steps</button>
-                <button id="resetAllBtn" type="button" class="danger">Reset All Data</button>
+            <div class="timer-buttons">
+              <button class="primary-btn" id="startTimerBtn">Start</button>
+              <button class="secondary-btn" id="pauseTimerBtn">Pause</button>
+              <button class="danger-btn" id="resetTimerBtn">Reset</button>
             </div>
+          </section>
+
+          <section class="panel">
+            <p class="eyebrow">Focus rules</p>
+            <h3>Keep it simple</h3>
+            <ul class="clean-list">
+              <li>Pick one task only.</li>
+              <li>Make the first step obvious.</li>
+              <li>Stop when the timer ends, even if it is not perfect.</li>
+              <li>Earn coins for every completed focus block.</li>
+            </ul>
+          </section>
+        </div>
+      </section>
+
+      <section class="tab-panel" id="toolkit">
+        <div class="section-title">
+          <p class="eyebrow">Toolkit</p>
+          <h2>Quick reset tools.</h2>
+          <p>Simple options for overwhelm, shutdown, anger, low mood or getting stuck.</p>
+        </div>
+
+        <div class="tool-grid">
+          <article class="tool-card">
+            <span>01</span>
+            <h3>Box breathing</h3>
+            <p>Breathe in 4, hold 4, out 4, hold 4. Repeat four times.</p>
+            <button class="secondary-btn" data-tool="breathing">Open</button>
+          </article>
+          <article class="tool-card">
+            <span>02</span>
+            <h3>Grounding</h3>
+            <p>Name 5 things you see, 4 you feel, 3 you hear, 2 you smell, 1 you taste.</p>
+            <button class="secondary-btn" data-tool="grounding">Open</button>
+          </article>
+          <article class="tool-card">
+            <span>03</span>
+            <h3>Task shrinker</h3>
+            <p>Turn a big demand into the smallest possible first step.</p>
+            <button class="secondary-btn" data-tool="shrinker">Open</button>
+          </article>
+          <article class="tool-card">
+            <span>04</span>
+            <h3>Help script</h3>
+            <p>Use a ready-made message when asking an adult for help feels hard.</p>
+            <button class="secondary-btn" data-tool="help">Open</button>
+          </article>
+        </div>
+
+        <section class="panel" id="toolOutput">
+          <p class="eyebrow">Selected tool</p>
+          <h3>Choose a tool above.</h3>
+          <p>The app will show the steps here.</p>
+        </section>
+      </section>
+
+      <section class="tab-panel" id="rewards">
+        <div class="section-title">
+          <p class="eyebrow">Rewards</p>
+          <h2>Reward effort, not perfection.</h2>
+          <p>Coins are stored locally and can be reset by the parent view.</p>
+        </div>
+
+        <div class="reward-grid">
+          <section class="panel coin-panel">
+            <div class="coin-total" id="coinTotalBig">0</div>
+            <p>Focus coins</p>
+            <div class="coin-actions">
+              <button class="secondary-btn" id="addCoinBtn">Add 1</button>
+              <button class="danger-btn" id="removeCoinBtn">Remove 1</button>
+            </div>
+          </section>
+          <section class="panel">
+            <h3>Suggested rewards</h3>
+            <div id="rewardList" class="reward-list"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="tab-panel locked-panel" id="parent">
+        <div class="section-title">
+          <p class="eyebrow">Parent / carer view</p>
+          <h2>Progress report and safety overview.</h2>
+          <p>Protected by a simple PIN. Default PIN is 1234 until changed in Settings.</p>
+        </div>
+
+        <section class="panel" id="pinGate">
+          <h3>Enter parent PIN</h3>
+          <p>This keeps reports away from casual access on the device. It is not a replacement for proper device security.</p>
+          <div class="pin-row">
+            <input id="pinInput" type="password" inputmode="numeric" placeholder="PIN" />
+            <button class="primary-btn" id="unlockParentBtn">Unlock</button>
+          </div>
         </section>
 
-        <section id="editScreen" class="screen" aria-label="Add or edit member screen">
-            <div class="card">
-                <h2 id="editTitle">Add Member</h2>
-                <p class="card-subtitle" id="editSubtitle">Create a family profile and set a daily step goal.</p>
+        <div id="parentContent" class="hidden">
+          <div class="dashboard-grid">
+            <article class="stat-card"><span class="stat-label">7-day check-ins</span><strong id="parentCheckinCount">0</strong><p>Recent logged entries.</p></article>
+            <article class="stat-card"><span class="stat-label">Average stress</span><strong id="parentAvgStress">—</strong><p>Higher means more pressure.</p></article>
+            <article class="stat-card"><span class="stat-label">Flagged entries</span><strong id="parentFlagged">0</strong><p>Teen chose to highlight these.</p></article>
+            <article class="stat-card"><span class="stat-label">Coins</span><strong id="parentCoins">0</strong><p>Effort/reward balance.</p></article>
+          </div>
 
-                <label for="nameInput">Name</label>
-                <input id="nameInput" type="text" placeholder="e.g. Jay" autocomplete="off">
-
-                <label for="roleInput">Role</label>
-                <select id="roleInput">
-                    <option value="Parent">Parent</option>
-                    <option value="Kid">Kid</option>
-                    <option value="Teen">Teen</option>
-                </select>
-
-                <label for="goalInput">Daily Step Goal</label>
-                <input id="goalInput" type="number" inputmode="numeric" min="1" placeholder="e.g. 6000">
-
-                <button id="saveMemberBtn" type="button">Save Member</button>
-                <button id="cancelEditBtn" type="button" class="secondary">Cancel</button>
+          <section class="panel">
+            <div class="section-header">
+              <div><p class="eyebrow">Report</p><h3>Check-in history</h3></div>
+              <div class="inline-actions">
+                <button class="secondary-btn" id="copyReportBtn">Copy report</button>
+                <button class="secondary-btn" id="exportDataBtn">Export data</button>
+              </div>
             </div>
-        </section>
+            <div id="reportOutput" class="report-box"></div>
+          </section>
+        </div>
+      </section>
 
-        <section id="memberScreen" class="screen" aria-label="Member details screen">
-            <div class="card">
-                <div class="member-header">
-                    <div id="detailAvatar" class="member-avatar large-avatar"></div>
-                    <div>
-                        <h2 id="detailName"></h2>
-                        <p id="detailRole"></p>
-                    </div>
-                </div>
+      <section class="tab-panel" id="settings">
+        <div class="section-title">
+          <p class="eyebrow">Settings</p>
+          <h2>Personalise this device.</h2>
+          <p>Everything is saved locally in this browser/app install.</p>
+        </div>
 
-                <div class="big-number" id="detailSteps">0</div>
-                <div class="muted" id="detailGoalText">0 / 0 steps</div>
-
-                <div class="progress-bar">
-                    <div id="detailProgress" class="progress-fill"></div>
-                </div>
-
-                <div class="progress-meta">
-                    <span id="detailPercent">0% complete</span>
-                    <span id="detailRemaining">0 left</span>
-                </div>
-
-                <div id="detailBadge"></div>
-
-                <div class="section-title">Add Steps</div>
-
-                <div class="quick-add-grid">
-                    <button class="quickAddBtn" type="button" data-amount="500">+500</button>
-                    <button class="quickAddBtn" type="button" data-amount="1000">+1,000</button>
-                    <button class="quickAddBtn" type="button" data-amount="2500">+2,500</button>
-                </div>
-
-                <label for="addStepsInput">Custom Amount</label>
-                <input id="addStepsInput" type="number" inputmode="numeric" min="1" placeholder="Add steps">
-
-                <button id="addStepsBtn" type="button">Add Steps</button>
-
-                <div class="section-title">7-Day History</div>
-                <div id="historyList"></div>
-
-                <button id="editMemberBtn" type="button" class="secondary">Edit Member</button>
-                <button id="deleteMemberBtn" type="button" class="danger">Delete Member</button>
-                <button id="backHomeBtn" type="button" class="secondary">Back</button>
-            </div>
-        </section>
+        <form id="settingsForm" class="panel form-grid">
+          <label>
+            Profile name
+            <input id="profileNameInput" type="text" placeholder="Teen name or nickname" />
+          </label>
+          <label>
+            Parent PIN
+            <input id="pinSetInput" type="password" inputmode="numeric" placeholder="4 digits" />
+          </label>
+          <label>
+            Theme mode
+            <select id="themeSelect">
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+            </select>
+          </label>
+          <label>
+            Accent style
+            <select id="accentSelect">
+              <option value="blue">Premium blue</option>
+              <option value="green">Calm green</option>
+              <option value="purple">Soft purple</option>
+              <option value="amber">Warm amber</option>
+            </select>
+          </label>
+          <div class="form-actions full-width">
+            <button class="primary-btn" type="submit">Save settings</button>
+            <button class="secondary-btn" type="button" id="importDataBtn">Import data</button>
+            <input id="importFileInput" type="file" accept="application/json" hidden />
+            <button class="danger-btn" type="button" id="wipeDataBtn">Wipe app data</button>
+          </div>
+        </form>
+      </section>
     </main>
 
-    <script src="script.js"></script>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+
+  <dialog id="onboardingDialog" class="app-dialog">
+    <form method="dialog" id="onboardingForm">
+      <img src="logo.svg" alt="" class="dialog-logo" />
+      <h2>Set up NeuroDirect</h2>
+      <p>Create a local profile for this device. No sign-in. No server. No Firebase.</p>
+      <label>
+        Teen name or nickname
+        <input id="onboardName" type="text" placeholder="Example: Alex" required />
+      </label>
+      <label>
+        Parent PIN
+        <input id="onboardPin" type="password" inputmode="numeric" minlength="4" placeholder="Default: 1234" />
+      </label>
+      <button class="primary-btn full-button" type="submit">Start</button>
+    </form>
+  </dialog>
+
+  <script src="script.js"></script>
 </body>
 </html>
