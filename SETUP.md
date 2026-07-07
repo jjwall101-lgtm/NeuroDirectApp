@@ -1,4 +1,4 @@
-# NeuroDirect v27 setup
+# NeuroDirect v28 setup
 
 ## Simple setup
 
@@ -8,19 +8,19 @@
 4. Open:
 
 Teen:
-https://jjwall101-lgtm.github.io/teen.html?v=27
+https://jjwall101-lgtm.github.io/teen.html?v=28
 
 Parent:
-https://jjwall101-lgtm.github.io/parent.html?v=27
+https://jjwall101-lgtm.github.io/parent.html?v=28
 
 ## What to check
 
-1. Open the Teen app.
-2. Scroll the main app page.
-3. Open the menu.
-4. Scroll the left menu.
-5. Scroll the right cards if needed.
-6. Repeat on Parent.
+1. Open the Parent app.
+2. Stay on Dashboard.
+3. Try to scroll the dashboard.
+4. Open the menu.
+5. Check the menu and right panel still work.
+6. Repeat on Teen.
 
 ## Firebase
 

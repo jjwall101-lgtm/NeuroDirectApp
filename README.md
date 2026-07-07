@@ -1,27 +1,28 @@
-# NeuroDirect v27 SCROLL FIX
+# NeuroDirect v28 PARENT DASHBOARD SCROLL FIX
 
 Flat no-folder package.
 
 ## What changed
 
-v27 keeps the v26 side-by-side phone menu layout, but fixes scrolling.
+v28 keeps the v26/v27 side-panel design, but specifically fixes the Parent dashboard scroll issue.
 
-The app should now:
+Fixes included:
 
-- Scroll normally on the main screen
-- Scroll inside the left menu drawer
-- Scroll inside the right-side card panel
-- Keep the cards beside the menu
-- Keep the working Firebase sync
-- Keep the parent-created family code flow
+- Parent dashboard scrolls normally
+- Main app page scrolls normally
+- Left menu still scrolls
+- Right side panel still scrolls
+- Cards remain beside the menu
+- Firebase sync unchanged
+- Parent-created family code unchanged
 
 ## Test links
 
 Teen:
-https://jjwall101-lgtm.github.io/teen.html?v=27
+https://jjwall101-lgtm.github.io/teen.html?v=28
 
 Parent:
-https://jjwall101-lgtm.github.io/parent.html?v=27
+https://jjwall101-lgtm.github.io/parent.html?v=28
 
 ## Upload
 

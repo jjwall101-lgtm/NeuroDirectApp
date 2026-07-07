@@ -1,11 +1,11 @@
-UPLOAD NOTES — NeuroDirect v27
+UPLOAD NOTES — NeuroDirect v28
 
-This version fixes scrolling after the v26 side-panel phone layout.
+This version fixes the Parent dashboard scrolling issue.
 
 Upload every file directly into GitHub root.
 
 Teen:
-https://jjwall101-lgtm.github.io/teen.html?v=27
+https://jjwall101-lgtm.github.io/teen.html?v=28
 
 Parent:
-https://jjwall101-lgtm.github.io/parent.html?v=27
+https://jjwall101-lgtm.github.io/parent.html?v=28
