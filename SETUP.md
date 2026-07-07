@@ -1,21 +1,18 @@
-# NeuroDirect v17 setup
+# NeuroDirect v18 setup
 
 ## Simple setup
 
-1. Upload all files to GitHub.
-2. Enable Anonymous sign-in in Firebase.
-3. Publish firestore.rules.
-4. Open teen.html.
-5. Enter teen name.
-6. Generate/save family code.
-7. Open parent.html.
-8. Enter parent name.
-9. Enter the same family code.
+1. Upload all v18 files to GitHub.
+2. Commit changes.
+3. In Firebase, enable Anonymous sign-in.
+4. In Firebase, publish firestore.rules.
+5. Open teen.html.
+6. Save teen name.
+7. Generate/save family code.
+8. Open parent.html.
+9. Save parent name.
+10. Enter the same family code.
 
-## Firebase setting needed
+## Important
 
-Go to Firebase Console:
-
-Authentication -> Sign-in method -> Anonymous -> Enable -> Save
-
-This keeps the app simple for users. They only use the family code.
+Use a new family code after uploading v18.

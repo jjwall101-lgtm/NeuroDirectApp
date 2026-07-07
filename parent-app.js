@@ -1,4 +1,4 @@
-import { firebaseConfig } from "./firebase-config.js?v=17";
+import { firebaseConfig } from "./firebase-config.js?v=18";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 import {
   getAuth,
@@ -13,7 +13,7 @@ import {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const STORAGE = "neurodirect_parent_v17";
+const STORAGE = "neurodirect_parent_v18";
 const $ = s => document.querySelector(s);
 const $$ = s => Array.from(document.querySelectorAll(s));
 
@@ -43,18 +43,20 @@ async function saveFamilyProfile(){
   const code=familyCode();
   if(!code) return;
 
-  await setDoc(doc(db,"families",code),{
-    code,
-    updatedAt:serverTimestamp()
-  },{merge:true});
-
+  // Create membership first so this parent is allowed to read/update the family.
   await setDoc(doc(db,"families",code,"members",currentUser.uid),{
     uid:currentUser.uid,
     displayName:parentName(),
     role:"parent",
     updatedAt:serverTimestamp()
   },{merge:true});
+
+  await setDoc(doc(db,"families",code),{
+    code,
+    updatedAt:serverTimestamp()
+  },{merge:true});
 }
+
 async function getChildren(){
   if(!familyCode()) return [];
   const snap=await getDocs(collection(db,"families",familyCode(),"children"));

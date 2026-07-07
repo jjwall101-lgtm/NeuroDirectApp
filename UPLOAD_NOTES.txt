@@ -1,9 +1,10 @@
-UPLOAD NOTES — NeuroDirect v17
+UPLOAD NOTES — NeuroDirect v18
 
-This version has no folders and no visible Firebase sign-in.
+This fixes the child connection issue.
 
-Upload every file directly to your GitHub repo root.
+Upload every file directly into GitHub root.
 
-Then in Firebase:
-1. Enable Anonymous sign-in
-2. Publish firestore.rules
+After upload:
+1. Publish firestore.rules
+2. Enable Anonymous sign-in
+3. Use a new family code for testing

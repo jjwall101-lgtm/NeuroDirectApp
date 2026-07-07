@@ -1,4 +1,4 @@
-import { firebaseConfig } from "./firebase-config.js?v=17";
+import { firebaseConfig } from "./firebase-config.js?v=18";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 import {
   getAuth,
@@ -13,7 +13,7 @@ import {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const STORAGE = "neurodirect_teen_v17";
+const STORAGE = "neurodirect_teen_v18";
 const $ = s => document.querySelector(s);
 const $$ = s => Array.from(document.querySelectorAll(s));
 
@@ -67,11 +67,10 @@ async function saveFamilyProfile(){
   const code = familyCode();
   if(!code) return;
 
-  await setDoc(doc(db,"families",code),{
-    code,
-    updatedAt:serverTimestamp()
-  },{merge:true});
-
+  // Join order fix:
+  // 1. Create this user's family membership first.
+  // 2. Create the child profile.
+  // 3. Then update the family document.
   await setDoc(doc(db,"families",code,"members",currentUser.uid),{
     uid:currentUser.uid,
     displayName:teenName(),
@@ -84,7 +83,13 @@ async function saveFamilyProfile(){
     displayName:teenName(),
     updatedAt:serverTimestamp()
   },{merge:true});
+
+  await setDoc(doc(db,"families",code),{
+    code,
+    updatedAt:serverTimestamp()
+  },{merge:true});
 }
+
 async function notifyParent(type,title,message){
   if(!currentUser || !familyCode()) return;
   await addDoc(collection(db,"families",familyCode(),"notifications"),{
