@@ -1244,3 +1244,214 @@ html[data-theme="dark"] .side-dashboard{
     height:39px;
   }
 }
+
+
+/* ---------------------------------------------------------
+   v25 MOBILE MENU FIT FIX
+   On phones the v24 side-by-side drawer was too wide.
+   This makes the drawer fit the viewport and stacks the
+   side dashboard cards below the navigation area.
+--------------------------------------------------------- */
+
+@media(max-width:980px){
+  body.menu-open{
+    overflow:hidden;
+  }
+
+  .sidebar{
+    top:82px;
+    width:100vw;
+    max-width:100vw;
+    height:calc(100dvh - 82px);
+    transform:translateX(-105%);
+    overflow:auto;
+    padding:.9rem;
+    border-right:0;
+    box-shadow:none;
+  }
+
+  .sidebar.open{
+    transform:translateX(0);
+    box-shadow:0 24px 70px rgba(15,23,42,.22);
+  }
+
+  .side-dashboard{
+    display:none;
+    position:fixed;
+    top:auto;
+    left:0;
+    right:0;
+    bottom:0;
+    width:100vw;
+    height:46dvh;
+    max-height:46dvh;
+    z-index:31;
+    grid-template-columns:1fr;
+    gap:.75rem;
+    padding:.75rem .9rem 1rem;
+    border-left:0;
+    border-right:0;
+    border-top:1px solid var(--border);
+    border-radius:28px 28px 0 0;
+    overflow:auto;
+    background:var(--panel-glass);
+    backdrop-filter:blur(24px);
+    -webkit-backdrop-filter:blur(24px);
+    box-shadow:0 -22px 60px rgba(15,23,42,.18);
+  }
+
+  .sidebar.open + .side-dashboard{
+    display:grid;
+  }
+
+  .sidebar.open{
+    padding-bottom:calc(46dvh + 1rem);
+  }
+
+  .side-dashboard .mock-hero-card{
+    min-height:190px;
+    border-radius:24px;
+    padding:1rem;
+  }
+
+  .side-dashboard .mock-hero-card h3{
+    font-size:1.18rem;
+    max-width:100%;
+  }
+
+  .side-dashboard .mock-hero-card p{
+    max-width:220px;
+    font-size:.86rem;
+    margin:.25rem 0;
+  }
+
+  .side-dashboard .landscape{
+    height:112px;
+  }
+
+  .side-dashboard .mountain{
+    width:132px;
+    height:98px;
+  }
+
+  .side-dashboard .sun{
+    width:46px;
+    height:46px;
+    top:22px;
+  }
+
+  .side-dashboard .dashboard-mini-card{
+    min-height:88px;
+    border-radius:22px;
+    padding:.8rem;
+    grid-template-columns:48px 1fr;
+    gap:.75rem;
+  }
+
+  .side-dashboard .card-icon{
+    width:46px;
+    height:46px;
+    border-radius:16px;
+    font-size:1.08rem;
+  }
+
+  .side-dashboard .progress-ring{
+    width:48px;
+    height:48px;
+  }
+
+  .side-dashboard .progress-ring::after{
+    width:35px;
+    height:35px;
+  }
+
+  .side-dashboard .dashboard-mini-card h4{
+    font-size:.96rem;
+  }
+
+  .side-dashboard .dashboard-mini-card p{
+    font-size:.82rem;
+    margin:0;
+  }
+
+  .side-dashboard .dashboard-mini-card strong{
+    font-size:1.12rem;
+  }
+
+  .profile-card{
+    border-radius:24px;
+  }
+
+  .nav{
+    border-radius:24px;
+    margin:.85rem 0;
+  }
+
+  .nav-link{
+    min-height:58px;
+    padding:.92rem .85rem;
+  }
+
+  .side-note{
+    border-radius:22px;
+  }
+}
+
+@media(max-width:620px){
+  .sidebar{
+    width:100vw;
+    max-width:100vw;
+  }
+
+  .side-dashboard{
+    left:0;
+    width:100vw;
+    height:44dvh;
+    max-height:44dvh;
+    padding:.72rem;
+  }
+
+  .sidebar.open{
+    padding-bottom:calc(44dvh + 1rem);
+  }
+
+  .side-dashboard .mock-hero-card{
+    min-height:168px;
+  }
+
+  .side-dashboard .landscape{
+    height:94px;
+  }
+
+  .side-dashboard .mountain{
+    width:116px;
+    height:84px;
+  }
+
+  .side-dashboard .dashboard-mini-card{
+    min-height:82px;
+  }
+}
+
+@media(max-width:420px){
+  .side-dashboard{
+    height:42dvh;
+    max-height:42dvh;
+  }
+
+  .sidebar.open{
+    padding-bottom:calc(42dvh + 1rem);
+  }
+
+  .side-dashboard .mock-hero-card{
+    min-height:152px;
+  }
+
+  .side-dashboard .mock-hero-card p{
+    max-width:190px;
+  }
+
+  .side-dashboard .landscape{
+    height:82px;
+  }
+}

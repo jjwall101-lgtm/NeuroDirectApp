@@ -1,4 +1,4 @@
-# NeuroDirect v24 setup
+# NeuroDirect v25 setup
 
 ## Simple setup
 
@@ -8,17 +8,17 @@
 4. Open:
 
 Teen:
-https://jjwall101-lgtm.github.io/teen.html?v=24
+https://jjwall101-lgtm.github.io/teen.html?v=25
 
 Parent:
-https://jjwall101-lgtm.github.io/parent.html?v=24
+https://jjwall101-lgtm.github.io/parent.html?v=25
 
 ## What to check
 
-1. Open Teen app.
+1. Open the Teen app on your phone.
 2. Tap the hamburger menu.
-3. The navigation should slide in.
-4. The mock-up cards should now sit beside the menu, not as a normal list on the dashboard.
+3. The menu should fit the full phone width.
+4. The cards should sit in a neat bottom panel, not off the right edge.
 5. Repeat on the Parent app.
 
 ## Firebase

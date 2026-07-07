@@ -1,4 +1,4 @@
-import { firebaseConfig } from "./firebase-config.js?v=24";
+import { firebaseConfig } from "./firebase-config.js?v=25";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 import {
   getAuth,
@@ -16,7 +16,7 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
-const app = initializeApp(firebaseConfig, "neurodirect-teen-v24");
+const app = initializeApp(firebaseConfig, "neurodirect-teen-v25");
 const auth = getAuth(app);
 const db = getFirestore(app);
 
@@ -416,7 +416,10 @@ function refreshAll(){
 }
 
 function bind(){
-  $("#menuButton").onclick = () => $("#sidebar").classList.toggle("open");
+  $("#menuButton").onclick = () => {
+    const open = $("#sidebar").classList.toggle("open");
+    document.body.classList.toggle("menu-open", open);
+  };
   $$(".nav-link").forEach(b => b.onclick = () => setTab(b.dataset.tab));
   $$("[data-go]").forEach(b => b.onclick = () => setTab(b.dataset.go));
 

@@ -1,4 +1,4 @@
-# NeuroDirect v24 MENU SIDE PANEL
+# NeuroDirect v25 MOBILE MENU FIT FIX
 
 Flat no-folder package.
 
@@ -6,47 +6,30 @@ Flat no-folder package.
 
 This version keeps:
 - Working Firebase family-code sync
-- Parent-created family code from v23
+- Parent-created family code
 - Red/default theme and Settings theme controls
 - Light/Dark mode
 - Flat GitHub upload structure
 
-## What changed in v24
+## What changed in v25
 
-The mock-up cards have been moved out of the dashboard content list and into a real side panel beside the navigation menu.
+v24 placed the menu and the side panel next to each other on phones, which made the layout overflow off-screen.
 
-This fixes the issue where the cards appeared as a normal vertical list on the page.
+v25 fixes this:
 
-## Teen side panel includes
-
-- Hello card
-- Your day / task progress
-- Next event
-- Focus session
-
-## Parent side panel includes
-
-- Hello parent card
-- Notifications
-- Next event
-- Tasks
-
-## Recommended setup flow
-
-1. Open Parent app.
-2. Settings -> Generate code.
-3. Copy/share the generated code.
-4. Open Teen app.
-5. Settings -> paste the same code -> Save family code.
-6. Sync starts.
+- On desktop/tablet: the menu and side panel can still sit side-by-side.
+- On phone: the menu becomes a full-width drawer.
+- The side dashboard cards sit neatly in a bottom stacked panel.
+- Nothing hangs off the right side of the screen.
+- The menu can scroll properly without cutting off the family code card.
 
 ## Test links
 
 Teen:
-https://jjwall101-lgtm.github.io/teen.html?v=24
+https://jjwall101-lgtm.github.io/teen.html?v=25
 
 Parent:
-https://jjwall101-lgtm.github.io/parent.html?v=24
+https://jjwall101-lgtm.github.io/parent.html?v=25
 
 ## Upload
 
