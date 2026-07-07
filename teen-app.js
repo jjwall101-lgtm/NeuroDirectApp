@@ -1,4 +1,4 @@
-import { firebaseConfig } from "./firebase-config.js?v=22";
+import { firebaseConfig } from "./firebase-config.js?v=23";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 import {
   getAuth,
@@ -16,7 +16,7 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
-const app = initializeApp(firebaseConfig, "neurodirect-teen-v22");
+const app = initializeApp(firebaseConfig, "neurodirect-teen-v23");
 const auth = getAuth(app);
 const db = getFirestore(app);
 
@@ -78,6 +78,21 @@ function familyCode(){
 function teenName(){
   return (state.displayName || "Teen").trim();
 }
+
+async function copyFamilyCodeValue(){
+  const code = familyCode();
+  if(!code){
+    toast("No family code to copy");
+    return;
+  }
+  try{
+    await navigator.clipboard.writeText(code);
+    toast("Family code copied");
+  }catch{
+    toast(code);
+  }
+}
+
 
 function applyAppearance(){
   document.documentElement.dataset.accent = state.accent || "red";
@@ -147,6 +162,7 @@ async function saveFamilyProfile(){
 
   await setDoc(doc(db, "families", code), {
     code,
+    createdFrom: "teen-app",
     updatedAt: serverTimestamp()
   }, {merge:true});
 
@@ -423,21 +439,10 @@ function bind(){
   }
 
   const copyFamilyCode = $("#copyFamilyCode");
-  if(copyFamilyCode){
-    copyFamilyCode.onclick = async () => {
-      const code = familyCode();
-      if(!code){
-        toast("No family code to copy");
-        return;
-      }
-      try{
-        await navigator.clipboard.writeText(code);
-        toast("Family code copied");
-      }catch{
-        toast(code);
-      }
-    };
-  }
+  if(copyFamilyCode) copyFamilyCode.onclick = copyFamilyCodeValue;
+
+  const copyFamilyCodeSettings = $("#copyFamilyCodeSettings");
+  if(copyFamilyCodeSettings) copyFamilyCodeSettings.onclick = copyFamilyCodeValue;
 
   ["stress","focus","energy"].forEach(n => $(`#${n}Input`).oninput = updateRanges);
 
@@ -462,8 +467,9 @@ function bind(){
     saveState();
     updateAuthUI();
     toast("Family code generated");
+    await copyFamilyCodeValue();
     const ok = await syncAll();
-    if(ok) toast("Family code generated and synced");
+    if(ok) toast("Family code generated, copied and synced");
     refreshAll();
   };
 

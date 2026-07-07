@@ -1,21 +1,23 @@
-# NeuroDirect v22 setup
+# NeuroDirect v23 setup
 
 ## Simple setup
 
 1. Download and extract the ZIP.
 2. Upload every file directly into GitHub root.
 3. Commit changes.
-4. Keep Firebase Anonymous sign-in enabled.
-5. Keep the included Firestore rules published.
-6. Open the v22 links.
+4. Open the Parent app first:
+   https://jjwall101-lgtm.github.io/parent.html?v=23
+5. Go to Settings.
+6. Press Generate code.
+7. Copy that code into the Teen app:
+   https://jjwall101-lgtm.github.io/teen.html?v=23
 
-Teen:
-https://jjwall101-lgtm.github.io/teen.html?v=22
+## Firebase
 
-Parent:
-https://jjwall101-lgtm.github.io/parent.html?v=22
+Keep the same working setup:
 
-## Notes
+- Authentication -> Anonymous enabled
+- Firestore Database created
+- firestore.rules published
 
-This version is a design/layout upgrade only.
-The working v20 Firebase family-code sync structure has not been changed.
+No Firebase rules change is required from v20/v22.

@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
   <meta name="theme-color" content="#0B1424">
   <title>NeuroDirect Parent</title>
-  <link rel="manifest" href="manifest-parent.json?v=22">
-  <link rel="icon" href="favicon.ico?v=22">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=22">
-  <link rel="stylesheet" href="style.css?v=22">
+  <link rel="manifest" href="manifest-parent.json?v=23">
+  <link rel="icon" href="favicon.ico?v=23">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=23">
+  <link rel="stylesheet" href="style.css?v=23">
 </head>
 <body>
   <div class="app-shell">
     <header class="topbar">
       <button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span><span></span></button>
       <div class="brand">
-        <img src="logo.png?v=22" alt="NeuroDirect logo" class="brand-logo">
+        <img src="logo.png?v=23" alt="NeuroDirect logo" class="brand-logo">
         <div><h1>NeuroDirect Parent</h1><p>Overview, plans and notifications</p></div>
       </div>
       <div class="top-actions">
@@ -41,7 +41,7 @@
         <div><strong>Family code</strong><span id="familyCodeLabel">Not linked yet</span></div>
         <button class="copy-button" id="copyFamilyCode" type="button" aria-label="Copy family code">⧉</button>
       </div>
-      <span class="side-version">v2.2.0</span>
+      <span class="side-version">v2.3.0</span>
     </aside>
 
     <main class="content">
@@ -137,7 +137,7 @@
       </section>
 
       <section class="tab" id="settings">
-        <div class="page-title"><p class="eyebrow">Settings</p><h2>Family link.</h2><p>No account sign-in needed. Enter the same family code used in the Teen app.</p></div>
+        <div class="page-title"><p class="eyebrow">Settings</p><h2>Family link.</h2><p>Create the family code here first, then enter the same code in the Teen app.</p></div>
 
         <section class="panel auth-box">
           <h3>Parent profile</h3>
@@ -149,11 +149,13 @@
         </section>
 
         <section class="panel auth-box" style="margin-top:1rem;">
-          <h3>Family code</h3>
-          <p class="muted">Enter the same family code used in the Teen app.</p>
+          <h3>Create or join family code</h3>
+          <p class="muted">Press Generate code on the Parent app first, then copy that code into the Teen app. You can also type an existing code manually.</p>
           <label>Family code<input id="familyCodeInput" placeholder="Example: WALL2026"></label>
           <div class="button-row" style="margin-top:1rem;">
             <button class="primary-button" id="saveFamilyCode" type="button">Save family code</button>
+            <button class="secondary-button" id="generateFamilyCode" type="button">Generate code</button>
+            <button class="secondary-button" id="copyFamilyCodeSettings" type="button">Copy code</button>
           </div>
         </section>
 
@@ -202,6 +204,6 @@
     </main>
     <div id="toast" class="toast"></div>
   </div>
-  <script type="module" src="parent-app.js?v=22"></script>
-<script>if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js?v=22").catch(() => {}); }</script></body>
+  <script type="module" src="parent-app.js?v=23"></script>
+<script>if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js?v=23").catch(() => {}); }</script></body>
 </html>

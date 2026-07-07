@@ -1,4 +1,4 @@
-import { firebaseConfig } from "./firebase-config.js?v=22";
+import { firebaseConfig } from "./firebase-config.js?v=23";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 import {
   getAuth,
@@ -15,7 +15,7 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
-const app = initializeApp(firebaseConfig, "neurodirect-parent-v22");
+const app = initializeApp(firebaseConfig, "neurodirect-parent-v23");
 const auth = getAuth(app);
 const db = getFirestore(app);
 
@@ -70,6 +70,46 @@ function parentName(){
   return (state.displayName || "Parent").trim();
 }
 
+function makeFamilyCode(){
+  return ("ND" + Math.random().toString(36).slice(2,8)).toUpperCase();
+}
+
+async function copyFamilyCodeValue(){
+  const code = familyCode();
+  if(!code){
+    toast("No family code to copy");
+    return;
+  }
+  try{
+    await navigator.clipboard.writeText(code);
+    toast("Family code copied");
+  }catch{
+    toast(code);
+  }
+}
+
+async function linkFamilyCode(code, successMessage){
+  state.familyCode = String(code || "").trim().toUpperCase();
+  saveState();
+  updateAuthUI();
+  updateParentRail();
+
+  if(!state.familyCode){
+    toast("Enter or generate a family code first");
+    return;
+  }
+
+  try{
+    await saveFamilyProfile();
+    await loadDashboard();
+    toast(successMessage || "Family code linked");
+  }catch(err){
+    console.error(err);
+    toast("Family code saved locally. Firebase sync failed.");
+  }
+}
+
+
 function applyAppearance(){
   document.documentElement.dataset.accent = state.accent || "red";
   document.documentElement.dataset.theme = state.mode || "light";
@@ -121,6 +161,7 @@ async function saveFamilyProfile(){
 
   await setDoc(doc(db, "families", code), {
     code,
+    createdFrom: "parent-app",
     updatedAt: serverTimestamp()
   }, {merge:true});
 
@@ -155,24 +196,42 @@ async function readFamilyCollection(name){
 }
 
 async function loadDashboard(){
-  if(!currentUser || !familyCode()) return;
+  if(!currentUser || !familyCode()){
+    updateParentRail();
+    return;
+  }
 
   try{
     await saveFamilyProfile();
 
-    const [notifs, events, checkins, members] = await Promise.all([
+    const [notifs, events, checkins, tasks, members] = await Promise.all([
       loadNotifications(true),
       loadCalendar(true),
       loadCheckins(true),
+      readFamilyCollection("tasks"),
       readFamilyCollection("members")
     ]);
 
-    $("#dashUnread").textContent = notifs.filter(n => !n.read).length;
-    $("#dashPlans").textContent = events.length;
-    $("#dashCheckins").textContent = checkins.length;
-    $("#dashMembers").textContent = members.length;
+    state.notifications = notifs;
+    state.events = events;
+    state.checkins = checkins;
+    state.tasks = tasks;
+    state.members = members;
 
-    renderNotifications("#latestNotifications", notifs.slice(0,4));
+    const unread = notifs.filter(n => !n.read).length;
+
+    const set = (id, value) => {
+      const el = $(id);
+      if(el) el.textContent = value;
+    };
+
+    set("#dashUnread", unread);
+    set("#dashPlans", events.length);
+    set("#dashCheckins", checkins.length);
+    set("#dashTasks", tasks.length);
+
+    renderNotifications("#dashboardNotifications", notifs.slice(0,4));
+    updateParentRail();
   }catch(err){
     console.error(err);
     toast("Parent data could not sync yet.");
@@ -182,8 +241,10 @@ async function loadDashboard(){
 async function loadNotifications(summaryOnly=false){
   const list = await readFamilyCollection("notifications");
   list.sort((a,b) => (b.createdAtIso || "").localeCompare(a.createdAtIso || ""));
+  state.notifications = list;
 
   if(!summaryOnly) renderNotifications("#notificationList", list);
+  updateParentRail();
   return list;
 }
 
@@ -216,8 +277,10 @@ async function loadCalendar(summaryOnly=false){
   const events = (await readFamilyCollection("calendar"))
     .filter(e => e.date >= today)
     .sort((a,b) => (a.date + a.start).localeCompare(b.date + b.start));
+  state.events = events;
 
   if(!summaryOnly) renderCalendar(events);
+  updateParentRail();
   return events;
 }
 
@@ -247,8 +310,10 @@ function renderCalendar(events){
 async function loadCheckins(summaryOnly=false){
   const list = await readFamilyCollection("checkins");
   list.sort((a,b) => (b.createdAtIso || "").localeCompare(a.createdAtIso || ""));
+  state.checkins = list;
 
   if(!summaryOnly) renderCheckins(list);
+  updateParentRail();
   return list;
 }
 
@@ -349,21 +414,10 @@ function bind(){
   }
 
   const copyFamilyCode = $("#copyFamilyCode");
-  if(copyFamilyCode){
-    copyFamilyCode.onclick = async () => {
-      const code = familyCode();
-      if(!code){
-        toast("No family code to copy");
-        return;
-      }
-      try{
-        await navigator.clipboard.writeText(code);
-        toast("Family code copied");
-      }catch{
-        toast(code);
-      }
-    };
-  }
+  if(copyFamilyCode) copyFamilyCode.onclick = copyFamilyCodeValue;
+
+  const copyFamilyCodeSettings = $("#copyFamilyCodeSettings");
+  if(copyFamilyCodeSettings) copyFamilyCodeSettings.onclick = copyFamilyCodeValue;
 
   $("#saveName").onclick = async () => {
     state.displayName = $("#displayNameInput").value.trim() || "Parent";
@@ -382,21 +436,18 @@ function bind(){
   };
 
   $("#saveFamilyCode").onclick = async () => {
-    state.familyCode = $("#familyCodeInput").value.trim().toUpperCase();
-    saveState();
-    updateAuthUI();
-  updateParentRail();
-    toast("Family code saved");
-
-    try{
-      await saveFamilyProfile();
-      await loadDashboard();
-      toast("Family code linked");
-    }catch(err){
-      console.error(err);
-      toast("Family code saved locally. Firebase sync failed.");
-    }
+    await linkFamilyCode($("#familyCodeInput").value, "Family code linked");
   };
+
+  const generateFamilyCode = $("#generateFamilyCode");
+  if(generateFamilyCode){
+    generateFamilyCode.onclick = async () => {
+      $("#familyCodeInput").value = makeFamilyCode();
+      await linkFamilyCode($("#familyCodeInput").value, "Family code created");
+      await copyFamilyCodeValue();
+      toast("Family code created and copied. Enter it in the Teen app.");
+    };
+  }
 
   $("#refreshCalendar").onclick = async () => {
     await loadCalendar();

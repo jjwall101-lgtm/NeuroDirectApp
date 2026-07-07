@@ -1,50 +1,41 @@
-# NeuroDirect v22 MOCK-UP DESIGN IMPLEMENTED
+# NeuroDirect v23 PARENT CREATES CODE
 
 Flat no-folder package.
 
-## Built from stable v20/v21
+## Built from stable sync baseline
 
-This version keeps the working Firebase/family-code sync.
+This version keeps the working Firebase/family-code sync structure from v20/v22.
 
-## What v22 adds
+## What changed in v23
 
-This version implements the actual mock-up design features:
+- Parent app can now create the family code first.
+- Parent Settings now has:
+  - Save family code
+  - Generate code
+  - Copy code
+- Teen app can join the code created by Parent.
+- Teen Settings wording now explains that the teen can join a parent-created code.
+- Generated codes are copied automatically where supported.
+- Parent dashboard sync stats fixed so the v22 mock-up dashboard cards update properly.
+- Red/default theme and all Settings theme options remain.
+- No Firestore structure change.
 
-- Premium app-shell layout.
-- Icon navigation.
-- Larger rounded profile card with arrow.
-- Premium family-code card with copy button.
-- Dashboard right-side cards:
-  - Greeting illustration card
-  - Your day / task progress card
-  - Next event card
-  - Focus session card
-- CSS landscape illustration matching the mock-up feel.
-- Red is the default accent theme.
-- Theme colours remain changeable in Settings:
-  - Red
-  - Teal
-  - Blue
-  - Purple
-  - Amber
-  - Slate
-- Light/Dark mode remains changeable in Settings.
-- Updated cache version to v22.
+## Recommended setup flow
 
-## Firebase
-
-Same as the stable working v20:
-
-1. Authentication -> Sign-in method -> Anonymous -> Enabled
-2. Firestore Database -> Rules -> publish firestore.rules
+1. Open Parent app.
+2. Settings -> Generate code.
+3. Copy/share the generated code.
+4. Open Teen app.
+5. Settings -> paste the same code -> Save family code.
+6. Sync starts.
 
 ## Test links
 
 Teen:
-https://jjwall101-lgtm.github.io/teen.html?v=22
+https://jjwall101-lgtm.github.io/teen.html?v=23
 
 Parent:
-https://jjwall101-lgtm.github.io/parent.html?v=22
+https://jjwall101-lgtm.github.io/parent.html?v=23
 
 ## Upload
 
