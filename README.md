@@ -1,38 +1,31 @@
-# NeuroDirect v25 MOBILE MENU FIT FIX
+# NeuroDirect v26 SIDE PANEL PHONE FIT
 
 Flat no-folder package.
 
-## Built from stable sync baseline
+## What changed
 
-This version keeps:
-- Working Firebase family-code sync
-- Parent-created family code
-- Red/default theme and Settings theme controls
-- Light/Dark mode
+This version keeps the mock-up style on phones:
+- left navigation menu
+- right-side preview/cards column
+
+But now both columns are sized to fit on-screen together.
+
+## Keeps working
+
+- Parent-created family code flow
+- Working Firebase sync
+- Theme switching
 - Flat GitHub upload structure
-
-## What changed in v25
-
-v24 placed the menu and the side panel next to each other on phones, which made the layout overflow off-screen.
-
-v25 fixes this:
-
-- On desktop/tablet: the menu and side panel can still sit side-by-side.
-- On phone: the menu becomes a full-width drawer.
-- The side dashboard cards sit neatly in a bottom stacked panel.
-- Nothing hangs off the right side of the screen.
-- The menu can scroll properly without cutting off the family code card.
 
 ## Test links
 
 Teen:
-https://jjwall101-lgtm.github.io/teen.html?v=25
+https://jjwall101-lgtm.github.io/teen.html?v=26
 
 Parent:
-https://jjwall101-lgtm.github.io/parent.html?v=25
+https://jjwall101-lgtm.github.io/parent.html?v=26
 
 ## Upload
 
 Upload every file directly into your GitHub repo root.
-
 Do not upload the ZIP itself.
