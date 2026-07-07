@@ -1,15 +1,15 @@
-UPLOAD NOTES — NeuroDirect v21
+UPLOAD NOTES — NeuroDirect v22
 
-This version implements the design polish and theme settings.
+This package implements the design mock-up properly.
 
 Upload every file directly into GitHub root.
 
 After upload, test:
 
 Teen:
-https://jjwall101-lgtm.github.io/teen.html?v=21
+https://jjwall101-lgtm.github.io/teen.html?v=22
 
 Parent:
-https://jjwall101-lgtm.github.io/parent.html?v=21
+https://jjwall101-lgtm.github.io/parent.html?v=22
 
 Theme controls are in Settings.

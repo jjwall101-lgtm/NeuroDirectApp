@@ -1,15 +1,21 @@
-# NeuroDirect v21 setup
+# NeuroDirect v22 setup
 
 ## Simple setup
 
-1. Upload all v21 files to GitHub.
-2. Commit changes.
-3. Keep Anonymous sign-in enabled in Firebase.
-4. Keep/publish the included firestore.rules.
-5. Open teen.html?v=21.
-6. Open parent.html?v=21.
-7. Go to Settings to change the theme colour and light/dark mode.
+1. Download and extract the ZIP.
+2. Upload every file directly into GitHub root.
+3. Commit changes.
+4. Keep Firebase Anonymous sign-in enabled.
+5. Keep the included Firestore rules published.
+6. Open the v22 links.
 
-## Important
+Teen:
+https://jjwall101-lgtm.github.io/teen.html?v=22
 
-v21 is a design polish update built from the working v20 sync system.
+Parent:
+https://jjwall101-lgtm.github.io/parent.html?v=22
+
+## Notes
+
+This version is a design/layout upgrade only.
+The working v20 Firebase family-code sync structure has not been changed.

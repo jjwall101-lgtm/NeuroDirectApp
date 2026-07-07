@@ -1,30 +1,39 @@
-# NeuroDirect v21 DESIGN + THEME POLISH
+# NeuroDirect v22 MOCK-UP DESIGN IMPLEMENTED
 
 Flat no-folder package.
 
-## Built from stable v20
+## Built from stable v20/v21
 
-This version keeps the working v20 Firebase/family-code sync.
+This version keeps the working Firebase/family-code sync.
 
-## Changes in v21
+## What v22 adds
 
-- Polished visual design.
-- Red is now the default theme.
-- Added theme colours:
+This version implements the actual mock-up design features:
+
+- Premium app-shell layout.
+- Icon navigation.
+- Larger rounded profile card with arrow.
+- Premium family-code card with copy button.
+- Dashboard right-side cards:
+  - Greeting illustration card
+  - Your day / task progress card
+  - Next event card
+  - Focus session card
+- CSS landscape illustration matching the mock-up feel.
+- Red is the default accent theme.
+- Theme colours remain changeable in Settings:
   - Red
   - Teal
   - Blue
   - Purple
   - Amber
   - Slate
-- Added light/dark mode selector.
-- Appearance is changeable in Settings on both Teen and Parent apps.
-- Updated cache version to v21.
-- No Firebase sync structure changes from v20.
+- Light/Dark mode remains changeable in Settings.
+- Updated cache version to v22.
 
-## Required Firebase setup
+## Firebase
 
-Same as v20:
+Same as the stable working v20:
 
 1. Authentication -> Sign-in method -> Anonymous -> Enabled
 2. Firestore Database -> Rules -> publish firestore.rules
@@ -32,10 +41,10 @@ Same as v20:
 ## Test links
 
 Teen:
-https://jjwall101-lgtm.github.io/teen.html?v=21
+https://jjwall101-lgtm.github.io/teen.html?v=22
 
 Parent:
-https://jjwall101-lgtm.github.io/parent.html?v=21
+https://jjwall101-lgtm.github.io/parent.html?v=22
 
 ## Upload
 

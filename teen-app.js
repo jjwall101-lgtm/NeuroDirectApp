@@ -1,4 +1,4 @@
-import { firebaseConfig } from "./firebase-config.js?v=21";
+import { firebaseConfig } from "./firebase-config.js?v=22";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 import {
   getAuth,
@@ -16,11 +16,11 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
-const app = initializeApp(firebaseConfig, "neurodirect-teen-v20");
+const app = initializeApp(firebaseConfig, "neurodirect-teen-v22");
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-const STORAGE = "neurodirect_teen_v21";
+const STORAGE = "neurodirect_teen_v22";
 const $ = s => document.querySelector(s);
 const $$ = s => Array.from(document.querySelectorAll(s));
 
@@ -133,6 +133,8 @@ function updateAuthUI(){
   $("#profileName").textContent = name;
   $("#avatarInitial").textContent = name.charAt(0).toUpperCase() || "N";
   $("#greeting").textContent = `${name}, build the day in smaller steps.`;
+  const mockHello = $("#mockHello");
+  if(mockHello) mockHello.textContent = `Hello, ${name}! 👋`;
 
   $("#familyCodeInput").value = state.familyCode || "";
   $("#displayNameInput").value = state.displayName || "";
@@ -251,11 +253,27 @@ function renderLocalDashboard(){
   const latest = [...state.localCheckins]
     .sort((a,b) => (b.createdAtIso || "").localeCompare(a.createdAtIso || ""))[0];
 
+  const doneTasks = state.localTasks.filter(t => t.done).length;
+  const totalTasks = state.localTasks.length;
+  const progress = totalTasks ? Math.round((doneTasks / totalTasks) * 100) : 0;
+
   $("#dashPlans").textContent = upcoming.length;
-  $("#dashTasks").textContent = state.localTasks.filter(t => t.done).length;
+  $("#dashTasks").textContent = doneTasks;
 
   $("#nextPlanTitle").textContent = upcoming[0] ? upcoming[0].title : "Nothing planned";
   $("#nextPlanTime").textContent = upcoming[0] ? `${formatDate(upcoming[0].date, upcoming[0].start)} ${upcoming[0].start || ""}` : "Add a calendar item.";
+
+  const railTasks = $("#railTasks");
+  const ring = $("#taskProgressRing");
+  const railNext = $("#railNextEvent");
+  const railNextTime = $("#railNextEventTime");
+  const railFocus = $("#railFocusTime");
+
+  if(railTasks) railTasks.textContent = `${doneTasks}/${totalTasks || 0}`;
+  if(ring) ring.style.setProperty("--progress", `${progress}%`);
+  if(railNext) railNext.textContent = upcoming[0] ? upcoming[0].title : "Nothing planned";
+  if(railNextTime) railNextTime.textContent = upcoming[0] ? `${formatDate(upcoming[0].date, upcoming[0].start)} ${upcoming[0].start || ""}` : "Add a calendar item";
+  if(railFocus) railFocus.textContent = formatTimer(timer.remaining || timer.total || 600);
 
   $("#dashMood").textContent = latest ? latest.mood : "—";
   $("#dashStress").textContent = latest ? `${latest.stress}/10` : "—";
@@ -401,6 +419,23 @@ function bind(){
       saveState();
       applyAppearance();
       toast("Appearance saved");
+    };
+  }
+
+  const copyFamilyCode = $("#copyFamilyCode");
+  if(copyFamilyCode){
+    copyFamilyCode.onclick = async () => {
+      const code = familyCode();
+      if(!code){
+        toast("No family code to copy");
+        return;
+      }
+      try{
+        await navigator.clipboard.writeText(code);
+        toast("Family code copied");
+      }catch{
+        toast(code);
+      }
     };
   }
 

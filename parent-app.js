@@ -1,4 +1,4 @@
-import { firebaseConfig } from "./firebase-config.js?v=21";
+import { firebaseConfig } from "./firebase-config.js?v=22";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 import {
   getAuth,
@@ -15,11 +15,11 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
-const app = initializeApp(firebaseConfig, "neurodirect-parent-v20");
+const app = initializeApp(firebaseConfig, "neurodirect-parent-v22");
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-const STORAGE = "neurodirect_parent_v21";
+const STORAGE = "neurodirect_parent_v22";
 const $ = s => document.querySelector(s);
 const $$ = s => Array.from(document.querySelectorAll(s));
 
@@ -275,6 +275,56 @@ function renderCheckins(list){
   `).join("");
 }
 
+
+function updateParentRail(){
+  const events = Array.isArray(state.events) ? state.events : [];
+  const tasks = Array.isArray(state.tasks) ? state.tasks : [];
+  const checkins = Array.isArray(state.checkins) ? state.checkins : [];
+  const notifications = Array.isArray(state.notifications) ? state.notifications : [];
+  const today = new Date().toISOString().slice(0,10);
+  const upcoming = events
+    .filter(e => !e.date || e.date >= today)
+    .sort((a,b) => ((a.date || "") + (a.start || "")).localeCompare((b.date || "") + (b.start || "")));
+  const next = upcoming[0];
+  const unread = notifications.filter(n => !n.read).length;
+
+  const set = (id, value) => {
+    const el = $(id);
+    if(el) el.textContent = value;
+  };
+
+  set("#dashUnread", unread);
+  set("#dashCheckins", checkins.length);
+  set("#dashTasks", tasks.length);
+  set("#dashPlans", upcoming.length);
+  set("#railUnread", unread);
+  set("#railTasks", tasks.length);
+  set("#nextEventTitle", next ? next.title : "Nothing planned");
+  set("#nextEventTime", next ? `${next.date || ""} ${next.start || ""}`.trim() : "No calendar items yet.");
+  set("#railNextEvent", next ? next.title : "Nothing planned");
+  set("#railNextEventTime", next ? `${next.date || ""} ${next.start || ""}`.trim() : "No calendar items yet");
+
+  const list = $("#dashboardNotifications");
+  if(list){
+    const latest = [...notifications].slice(0,4);
+    if(!latest.length){
+      list.className = "list empty-state";
+      list.textContent = "No notifications yet.";
+    }else{
+      list.className = "list";
+      list.innerHTML = latest.map(n => `
+        <article class="item ${n.read ? "" : "notification-unread"}">
+          <div>
+            <strong>${esc(n.title || "Notification")}</strong>
+            <small>${esc(n.childName || "Teen")} • ${esc(n.createdAtIso ? new Date(n.createdAtIso).toLocaleString("en-GB") : "")}</small>
+            <p>${esc(n.message || "")}</p>
+          </div>
+        </article>
+      `).join("");
+    }
+  }
+}
+
 function bind(){
   $("#menuButton").onclick = () => $("#sidebar").classList.toggle("open");
   $$(".nav-link").forEach(b => b.onclick = () => setTab(b.dataset.tab));
@@ -298,10 +348,28 @@ function bind(){
     };
   }
 
+  const copyFamilyCode = $("#copyFamilyCode");
+  if(copyFamilyCode){
+    copyFamilyCode.onclick = async () => {
+      const code = familyCode();
+      if(!code){
+        toast("No family code to copy");
+        return;
+      }
+      try{
+        await navigator.clipboard.writeText(code);
+        toast("Family code copied");
+      }catch{
+        toast(code);
+      }
+    };
+  }
+
   $("#saveName").onclick = async () => {
     state.displayName = $("#displayNameInput").value.trim() || "Parent";
     saveState();
     updateAuthUI();
+  updateParentRail();
     toast("Name saved");
 
     if(currentUser && familyCode()){
@@ -317,6 +385,7 @@ function bind(){
     state.familyCode = $("#familyCodeInput").value.trim().toUpperCase();
     saveState();
     updateAuthUI();
+  updateParentRail();
     toast("Family code saved");
 
     try{
@@ -370,6 +439,7 @@ function bind(){
 onAuthStateChanged(auth, async user => {
   currentUser = user;
   updateAuthUI();
+  updateParentRail();
 
   if(user && familyCode()){
     await saveFamilyProfile().catch(console.error);
@@ -385,3 +455,4 @@ signInAnonymously(auth).catch(err => {
 bind();
 applyAppearance();
 updateAuthUI();
+  updateParentRail();
