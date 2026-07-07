@@ -1,5 +1,9 @@
-NeuroDirect FULL REWRITE v12
+UPLOAD NOTES — NeuroDirect v16 flat package
 
-Unzip this package. Upload every file inside it into your GitHub repo root. Commit changes.
+This version has no folders.
 
-Key files: index.html, style.css, script.js, firebase-config.js, firebase-profiles.js, sw.js, manifest.json, firestore.rules.
+Upload ALL files directly into GitHub root.
+
+Do not upload the ZIP itself.
+
+After upload, GitHub should show teen.html and parent.html in the main file list.

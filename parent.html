@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+  <meta name="theme-color" content="#0B1424">
+  <title>NeuroDirect Parent</title>
+  <link rel="manifest" href="manifest-parent.json?v=16">
+  <link rel="icon" href="favicon.ico?v=16">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=16">
+  <link rel="stylesheet" href="style.css?v=16">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span><span></span></button>
+      <div class="brand">
+        <img src="logo.png?v=16" alt="NeuroDirect logo" class="brand-logo">
+        <div><h1>NeuroDirect Parent</h1><p>Overview, plans and notifications</p></div>
+      </div>
+      <div class="top-actions">
+        <button class="ghost-button" id="themeButton" type="button">Dark</button>
+        <button class="primary-button small" data-go="notifications" type="button">Notifications</button>
+      </div>
+    </header>
+
+    <aside class="sidebar" id="sidebar">
+      <div class="profile-card">
+        <div class="avatar" id="avatarInitial">P</div>
+        <div><strong id="profileName">Parent</strong><span id="profileStatus">Firebase profile</span></div>
+      </div>
+      <nav class="nav">
+        <button class="nav-link active" data-tab="dashboard">Dashboard</button>
+        <button class="nav-link" data-tab="calendar">Calendar</button>
+        <button class="nav-link" data-tab="notifications">Notifications</button>
+        <button class="nav-link" data-tab="checkins">Check-ins</button>
+        <button class="nav-link" data-tab="settings">Settings</button>
+      </nav>
+      <div class="side-note"><strong>Family code</strong><span id="familyCodeLabel">Not linked yet</span></div>
+    </aside>
+
+    <main class="content">
+      <section class="tab active" id="dashboard">
+        <div class="hero">
+          <div>
+            <p class="eyebrow">Parent dashboard</p>
+            <h2>Family overview.</h2>
+            <p>See upcoming plans, flagged check-ins and in-app notifications.</p>
+            <div class="button-row"><button class="primary-button" data-go="notifications">View notifications</button><button class="secondary-button" data-go="calendar">View calendar</button></div>
+          </div>
+        </div>
+        <div class="stats-grid">
+          <article class="stat-card"><span>Unread alerts</span><strong id="dashUnread">0</strong><p>Parent notifications.</p></article>
+          <article class="stat-card"><span>Upcoming plans</span><strong id="dashPlans">0</strong><p>Calendar items ahead.</p></article>
+          <article class="stat-card"><span>Recent check-ins</span><strong id="dashCheckins">0</strong><p>Latest records.</p></article>
+          <article class="stat-card"><span>Family members</span><strong id="dashMembers">0</strong><p>Linked accounts.</p></article>
+        </div>
+        <section class="panel"><div class="section-header"><h3>Latest notifications</h3></div><div id="latestNotifications" class="list empty-state">No notifications yet.</div></section>
+      </section>
+
+      <section class="tab" id="calendar">
+        <div class="page-title"><p class="eyebrow">Calendar</p><h2>Child plans.</h2><p>Read-only view of teen calendar items.</p></div>
+        <section class="panel"><div class="section-header"><h3>Upcoming plans</h3><button class="secondary-button small" id="refreshCalendar" type="button">Refresh</button></div><div id="calendarList" class="day-list empty-state">No calendar items yet.</div></section>
+      </section>
+
+      <section class="tab" id="notifications">
+        <div class="page-title"><p class="eyebrow">Notifications</p><h2>Parent alerts.</h2><p>These are in-app notifications. Phone push notifications can be added later.</p></div>
+        <section class="panel"><div class="section-header"><h3>Notification centre</h3><button class="secondary-button small" id="markAllRead" type="button">Mark all read</button></div><div id="notificationList" class="list empty-state">No notifications yet.</div></section>
+      </section>
+
+      <section class="tab" id="checkins">
+        <div class="page-title"><p class="eyebrow">Check-ins</p><h2>Recent check-ins.</h2></div>
+        <section class="panel"><div id="checkinList" class="list empty-state">No check-ins yet.</div></section>
+      </section>
+
+      <section class="tab" id="settings">
+        <div class="page-title"><p class="eyebrow">Settings</p><h2>Account and family link.</h2></div>
+        <section class="panel auth-box">
+          <div class="section-header"><div><h3>Firebase account</h3><p id="authStatus" class="muted">Not signed in</p></div><span class="pill" id="authPill">Signed out</span></div>
+          <div id="signedOutBox" class="form-grid">
+            <label>Email<input id="emailInput" type="email" autocomplete="email"></label>
+            <label>Password<input id="passwordInput" type="password" autocomplete="current-password"></label>
+            <label class="full">Display name<input id="displayNameInput" placeholder="Parent name"></label>
+            <div class="button-row full"><button class="primary-button" id="createAccount" type="button">Create account</button><button class="secondary-button" id="signIn" type="button">Sign in</button></div>
+          </div>
+          <div id="signedInBox" class="hidden"><div class="button-row"><button class="primary-button" id="saveProfile" type="button">Save profile</button><button class="danger-button" id="signOut" type="button">Sign out</button></div></div>
+        </section>
+        <section class="panel auth-box" style="margin-top:1rem;">
+          <h3>Family code</h3>
+          <p class="muted">Enter the same family code used in the Teen app.</p>
+          <label>Family code<input id="familyCodeInput" placeholder="Example: WALL2026"></label>
+          <div class="button-row" style="margin-top:1rem;"><button class="primary-button" id="saveFamilyCode" type="button">Save family code</button></div>
+        </section>
+      </section>
+    </main>
+    <div id="toast" class="toast"></div>
+  </div>
+  <script type="module" src="parent-app.js?v=16"></script>
+<script>if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js?v=16").catch(() => {}); }</script></body>
+</html>

@@ -1,1 +1,76 @@
-const CACHE_NAME="neurodirect-cache-v13.0.0";const APP_FILES=["./","./index.html?v=13","./index.html","./style.css?v=13","./style.css","./script.js?v=13","./script.js","./firebase-config.js?v=13","./firebase-config.js","./firebase-profiles.js?v=13","./firebase-profiles.js","./manifest.json?v=13","./manifest.json","./favicon.ico?v=13","./favicon.ico","./apple-touch-icon.png?v=13","./apple-touch-icon.png","./icon-48.png?v=13","./icon-72.png?v=13","./icon-96.png?v=13","./icon-128.png?v=13","./icon-144.png?v=13","./icon-152.png?v=13","./icon-180.png?v=13","./icon-192.png?v=13","./icon-384.png?v=13","./icon-512.png?v=13","./firestore.rules","./FIREBASE_SETUP.md","./README.md"];self.addEventListener("install",e=>{e.waitUntil(caches.open(CACHE_NAME).then(c=>c.addAll(APP_FILES)));self.skipWaiting()});self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE_NAME).map(k=>caches.delete(k)))));self.clients.claim()});self.addEventListener("fetch",e=>{if(e.request.method!=="GET")return;const url=new URL(e.request.url),isHtml=e.request.mode==="navigate"||url.pathname.endsWith(".html")||url.pathname.endsWith("/");if(isHtml){e.respondWith(fetch(e.request).then(r=>{const copy=r.clone();caches.open(CACHE_NAME).then(c=>c.put(e.request,copy));return r}).catch(()=>caches.match("./index.html?v=13").then(c=>c||caches.match("./index.html"))));return}e.respondWith(caches.match(e.request).then(c=>c||fetch(e.request).then(r=>{const copy=r.clone();caches.open(CACHE_NAME).then(cache=>cache.put(e.request,copy));return r}))) });
+const CACHE_NAME = "neurodirect-flat-v16.0.0";
+
+const APP_FILES = [
+  "./",
+  "./index.html",
+  "./teen.html?v=16",
+  "./teen.html",
+  "./parent.html?v=16",
+  "./parent.html",
+  "./style.css?v=16",
+  "./style.css",
+  "./teen-app.js?v=16",
+  "./teen-app.js",
+  "./parent-app.js?v=16",
+  "./parent-app.js",
+  "./firebase-config.js?v=16",
+  "./firebase-config.js",
+  "./manifest-teen.json?v=16",
+  "./manifest-teen.json",
+  "./manifest-parent.json?v=16",
+  "./manifest-parent.json",
+  "./logo.png?v=16",
+  "./logo.png",
+  "./icon-192.png?v=16",
+  "./icon-192.png",
+  "./icon-512.png?v=16",
+  "./icon-512.png",
+  "./apple-touch-icon.png?v=16",
+  "./apple-touch-icon.png",
+  "./favicon.ico?v=16",
+  "./favicon.ico"
+];
+
+self.addEventListener("install", event => {
+  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_FILES)));
+  self.skipWaiting();
+});
+
+self.addEventListener("activate", event => {
+  event.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key)))
+    )
+  );
+  self.clients.claim();
+});
+
+self.addEventListener("fetch", event => {
+  if (event.request.method !== "GET") return;
+
+  const url = new URL(event.request.url);
+  const isHtml = event.request.mode === "navigate" || url.pathname.endsWith(".html") || url.pathname.endsWith("/");
+
+  if (isHtml) {
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
+          return response;
+        })
+        .catch(() => caches.match("./index.html"))
+    );
+    return;
+  }
+
+  event.respondWith(
+    caches.match(event.request).then(cached =>
+      cached || fetch(event.request).then(response => {
+        const copy = response.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
+        return response;
+      })
+    )
+  );
+});

@@ -1,11 +1,46 @@
-# NeuroDirect FULL REWRITE v13
+# NeuroDirect v16 FLAT NO-FOLDERS PACKAGE
 
-One clean GitHub Pages package. Firebase is already configured for project `neurodirect-d62be`.
+This package has NO folders.
 
-Upload every file inside this package to the repo root. Do not upload the ZIP itself.
+Upload every file directly into your GitHub repo root.
 
-Required in Firebase Console: Email/Password Authentication enabled, Firestore created, Firestore rules published.
+## Main files
 
-Default parent PIN: `1234`.
+- index.html
+- teen.html
+- parent.html
+- style.css
+- teen-app.js
+- parent-app.js
+- firebase-config.js
+- manifest-teen.json
+- manifest-parent.json
+- sw.js
+- firestore.rules
+- logo/icons
 
-Cache: `neurodirect-cache-v13.0.0`.
+## URLs after upload
+
+Chooser:
+
+https://jjwall101-lgtm.github.io/
+
+Teen app:
+
+https://jjwall101-lgtm.github.io/teen.html
+
+Parent app:
+
+https://jjwall101-lgtm.github.io/parent.html
+
+## Firebase
+
+Firebase is already configured.
+
+You still need to publish the updated rules from:
+
+firestore.rules
+
+## Family linking
+
+Use the same family code in both apps.

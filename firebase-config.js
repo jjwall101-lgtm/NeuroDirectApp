@@ -1,5 +1,5 @@
-// NeuroDirect Firebase config
-// Already configured for Firebase project: neurodirect-d62be
+// NeuroDirect shared Firebase config
+// Used by both /teen and /parent apps.
 
 export const firebaseConfig = {
   apiKey: "AIzaSyCoJHKveHkA5U3W0IH5HWBBIqre3bOrhps",
