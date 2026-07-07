@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
   <meta name="theme-color" content="#0B1424">
   <title>NeuroDirect Teen</title>
-  <link rel="manifest" href="manifest-teen.json?v=20">
-  <link rel="icon" href="favicon.ico?v=20">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=20">
-  <link rel="stylesheet" href="style.css?v=20">
+  <link rel="manifest" href="manifest-teen.json?v=21">
+  <link rel="icon" href="favicon.ico?v=21">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=21">
+  <link rel="stylesheet" href="style.css?v=21">
 </head>
 <body>
   <div class="app-shell">
     <header class="topbar">
       <button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span><span></span></button>
       <div class="brand">
-        <img src="logo.png?v=20" alt="NeuroDirect logo" class="brand-logo">
+        <img src="logo.png?v=21" alt="NeuroDirect logo" class="brand-logo">
         <div><h1>NeuroDirect Teen</h1><p>Planning, check-ins and focus</p></div>
       </div>
       <div class="top-actions">
@@ -165,6 +165,41 @@
           </div>
         </section>
 
+        
+        <section class="panel auth-box" style="margin-top:1rem;">
+          <h3>Appearance</h3>
+          <p class="muted">Choose the app colour and light/dark mode for this device.</p>
+          <div class="form-grid">
+            <label>Colour theme
+              <select id="accentSelect">
+                <option value="red">Red</option>
+                <option value="teal">Teal</option>
+                <option value="blue">Blue</option>
+                <option value="purple">Purple</option>
+                <option value="amber">Amber</option>
+                <option value="slate">Slate</option>
+              </select>
+            </label>
+            <label>Mode
+              <select id="modeSelect">
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+              </select>
+            </label>
+          </div>
+          <div class="theme-preview-row">
+            <span class="theme-dot red"></span>
+            <span class="theme-dot teal"></span>
+            <span class="theme-dot blue"></span>
+            <span class="theme-dot purple"></span>
+            <span class="theme-dot amber"></span>
+            <span class="theme-dot slate"></span>
+          </div>
+          <div class="button-row" style="margin-top:1rem;">
+            <button class="primary-button" id="saveAppearance" type="button">Save appearance</button>
+          </div>
+        </section>
+
         <section class="panel auth-box" style="margin-top:1rem;">
           <h3>Connection</h3>
           <p id="authStatus" class="muted">Starting secure background connection...</p>
@@ -175,6 +210,6 @@
     </main>
     <div id="toast" class="toast"></div>
   </div>
-  <script type="module" src="teen-app.js?v=20"></script>
-<script>if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js?v=20").catch(() => {}); }</script></body>
+  <script type="module" src="teen-app.js?v=21"></script>
+<script>if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js?v=21").catch(() => {}); }</script></body>
 </html>

@@ -1,33 +1,44 @@
-# NeuroDirect v20 DIRECT FAMILY SYNC
+# NeuroDirect v21 DESIGN + THEME POLISH
 
 Flat no-folder package.
 
-## Fixed in v20
+## Built from stable v20
 
-- Child data now writes directly to the shared family-code space.
-- Parent app now reads directly from that same family-code space.
-- No more relying on the parent discovering a child profile first.
-- Calendar, check-ins, tasks and notifications use:
-  - families/{familyCode}/calendar
-  - families/{familyCode}/checkins
-  - families/{familyCode}/tasks
-  - families/{familyCode}/notifications
-- Saves still happen locally first.
-- Firebase sync then mirrors the data to the shared family code.
+This version keeps the working v20 Firebase/family-code sync.
 
-## Required Firebase steps
+## Changes in v21
+
+- Polished visual design.
+- Red is now the default theme.
+- Added theme colours:
+  - Red
+  - Teal
+  - Blue
+  - Purple
+  - Amber
+  - Slate
+- Added light/dark mode selector.
+- Appearance is changeable in Settings on both Teen and Parent apps.
+- Updated cache version to v21.
+- No Firebase sync structure changes from v20.
+
+## Required Firebase setup
+
+Same as v20:
 
 1. Authentication -> Sign-in method -> Anonymous -> Enabled
-2. Firestore Database -> Rules -> paste firestore.rules -> Publish
+2. Firestore Database -> Rules -> publish firestore.rules
 
 ## Test links
 
 Teen:
-https://jjwall101-lgtm.github.io/teen.html?v=20
+https://jjwall101-lgtm.github.io/teen.html?v=21
 
 Parent:
-https://jjwall101-lgtm.github.io/parent.html?v=20
+https://jjwall101-lgtm.github.io/parent.html?v=21
 
-## Important
+## Upload
 
-After uploading v20, use a brand new family code for testing.
+Upload every file directly into your GitHub repo root.
+
+Do not upload the ZIP itself.

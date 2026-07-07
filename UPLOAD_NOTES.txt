@@ -1,10 +1,15 @@
-UPLOAD NOTES — NeuroDirect v20
+UPLOAD NOTES — NeuroDirect v21
 
-This version fixes parent app not showing child data.
+This version implements the design polish and theme settings.
 
 Upload every file directly into GitHub root.
 
-Then:
-1. Enable Anonymous sign-in
-2. Publish firestore.rules
-3. Test with a brand new family code
+After upload, test:
+
+Teen:
+https://jjwall101-lgtm.github.io/teen.html?v=21
+
+Parent:
+https://jjwall101-lgtm.github.io/parent.html?v=21
+
+Theme controls are in Settings.

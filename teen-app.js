@@ -1,4 +1,4 @@
-import { firebaseConfig } from "./firebase-config.js?v=20";
+import { firebaseConfig } from "./firebase-config.js?v=21";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 import {
   getAuth,
@@ -20,7 +20,7 @@ const app = initializeApp(firebaseConfig, "neurodirect-teen-v20");
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-const STORAGE = "neurodirect_teen_v20";
+const STORAGE = "neurodirect_teen_v21";
 const $ = s => document.querySelector(s);
 const $$ = s => Array.from(document.querySelectorAll(s));
 
@@ -32,6 +32,8 @@ function defaultState(){
   return {
     displayName: "Teen",
     familyCode: "",
+    accent: "red",
+    mode: "light",
     localTasks: [],
     localEvents: [],
     localCheckins: []
@@ -77,6 +79,21 @@ function teenName(){
   return (state.displayName || "Teen").trim();
 }
 
+function applyAppearance(){
+  document.documentElement.dataset.accent = state.accent || "red";
+  document.documentElement.dataset.theme = state.mode || "light";
+
+  const accent = $("#accentSelect");
+  const mode = $("#modeSelect");
+
+  if(accent) accent.value = state.accent || "red";
+  if(mode) mode.value = state.mode || "light";
+
+  const themeButton = $("#themeButton");
+  if(themeButton) themeButton.textContent = (state.mode || "light") === "dark" ? "Light" : "Dark";
+}
+
+
 function familyDoc(){
   const code = familyCode();
   if(!code) throw new Error("Set a family code first.");
@@ -104,6 +121,7 @@ function formatDate(dateStr, timeStr=""){
 }
 
 function updateAuthUI(){
+  applyAppearance();
   const connected = !!currentUser;
 
   $("#authPill").textContent = connected ? "Connected" : "Connecting";
@@ -369,9 +387,22 @@ function bind(){
   $$("[data-go]").forEach(b => b.onclick = () => setTab(b.dataset.go));
 
   $("#themeButton").onclick = () => {
-    document.documentElement.dataset.theme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
-    $("#themeButton").textContent = document.documentElement.dataset.theme === "dark" ? "Light" : "Dark";
+    state.mode = (state.mode || "light") === "dark" ? "light" : "dark";
+    saveState();
+    applyAppearance();
+    toast(`${state.mode === "dark" ? "Dark" : "Light"} mode applied`);
   };
+
+  const saveAppearance = $("#saveAppearance");
+  if(saveAppearance){
+    saveAppearance.onclick = () => {
+      state.accent = $("#accentSelect")?.value || "red";
+      state.mode = $("#modeSelect")?.value || "light";
+      saveState();
+      applyAppearance();
+      toast("Appearance saved");
+    };
+  }
 
   ["stress","focus","energy"].forEach(n => $(`#${n}Input`).oninput = updateRanges);
 
@@ -630,6 +661,7 @@ signInAnonymously(auth).catch(err => {
 });
 
 bind();
+applyAppearance();
 updateRanges();
 updateTimer();
 updateAuthUI();
