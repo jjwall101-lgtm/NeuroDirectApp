@@ -1611,3 +1611,64 @@ html[data-theme="dark"] .side-dashboard{
     font-size:.64rem;
   }
 }
+
+
+/* ---------------------------------------------------------
+   v27 SCROLL FIX
+   Keeps v26 side-by-side mobile drawer, but removes the hard
+   body scroll lock that stopped the app scrolling properly.
+--------------------------------------------------------- */
+
+html,
+body{
+  min-height:100%;
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+
+body.menu-open{
+  overflow-y:auto !important;
+}
+
+.content{
+  overflow:visible;
+}
+
+@media(max-width:980px){
+  .content{
+    min-height:calc(100dvh - 82px);
+    overflow:visible;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  .sidebar{
+    overflow-y:auto;
+    overflow-x:hidden;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+    touch-action:pan-y;
+  }
+
+  .side-dashboard{
+    overflow-y:auto;
+    overflow-x:hidden;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+    touch-action:pan-y;
+  }
+
+  .app-shell{
+    min-height:100dvh;
+    overflow:visible;
+  }
+
+  .tab{
+    overflow:visible;
+  }
+}
+
+@media(max-width:620px){
+  .content{
+    padding-bottom:6rem;
+  }
+}

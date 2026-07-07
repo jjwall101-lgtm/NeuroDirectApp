@@ -1,11 +1,11 @@
-UPLOAD NOTES — NeuroDirect v26
+UPLOAD NOTES — NeuroDirect v27
 
-This version keeps the mock-up side-by-side menu on phones.
+This version fixes scrolling after the v26 side-panel phone layout.
 
 Upload every file directly into GitHub root.
 
 Teen:
-https://jjwall101-lgtm.github.io/teen.html?v=26
+https://jjwall101-lgtm.github.io/teen.html?v=27
 
 Parent:
-https://jjwall101-lgtm.github.io/parent.html?v=26
+https://jjwall101-lgtm.github.io/parent.html?v=27

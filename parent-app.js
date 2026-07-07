@@ -1,4 +1,4 @@
-import { firebaseConfig } from "./firebase-config.js?v=26";
+import { firebaseConfig } from "./firebase-config.js?v=27";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 import {
   getAuth,
@@ -15,7 +15,7 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
-const app = initializeApp(firebaseConfig, "neurodirect-parent-v26");
+const app = initializeApp(firebaseConfig, "neurodirect-parent-v27");
 const auth = getAuth(app);
 const db = getFirestore(app);
 
@@ -392,8 +392,7 @@ function updateParentRail(){
 
 function bind(){
   $("#menuButton").onclick = () => {
-    const open = $("#sidebar").classList.toggle("open");
-    document.body.classList.toggle("menu-open", open);
+    $("#sidebar").classList.toggle("open");
   };
   $$(".nav-link").forEach(b => b.onclick = () => setTab(b.dataset.tab));
   $$("[data-go]").forEach(b => b.onclick = () => setTab(b.dataset.go));

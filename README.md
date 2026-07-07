@@ -1,31 +1,30 @@
-# NeuroDirect v26 SIDE PANEL PHONE FIT
+# NeuroDirect v27 SCROLL FIX
 
 Flat no-folder package.
 
 ## What changed
 
-This version keeps the mock-up style on phones:
-- left navigation menu
-- right-side preview/cards column
+v27 keeps the v26 side-by-side phone menu layout, but fixes scrolling.
 
-But now both columns are sized to fit on-screen together.
+The app should now:
 
-## Keeps working
-
-- Parent-created family code flow
-- Working Firebase sync
-- Theme switching
-- Flat GitHub upload structure
+- Scroll normally on the main screen
+- Scroll inside the left menu drawer
+- Scroll inside the right-side card panel
+- Keep the cards beside the menu
+- Keep the working Firebase sync
+- Keep the parent-created family code flow
 
 ## Test links
 
 Teen:
-https://jjwall101-lgtm.github.io/teen.html?v=26
+https://jjwall101-lgtm.github.io/teen.html?v=27
 
 Parent:
-https://jjwall101-lgtm.github.io/parent.html?v=26
+https://jjwall101-lgtm.github.io/parent.html?v=27
 
 ## Upload
 
-Upload every file directly into your GitHub repo root.
+Upload every file directly into GitHub root.
+
 Do not upload the ZIP itself.
