@@ -1,31 +1,21 @@
-# NeuroDirect v16 setup
+# NeuroDirect v17 setup
 
 ## Simple setup
 
-1. Upload every file in this package to GitHub.
-2. Commit changes.
-3. Publish firestore.rules in Firebase.
+1. Upload all files to GitHub.
+2. Enable Anonymous sign-in in Firebase.
+3. Publish firestore.rules.
 4. Open teen.html.
-5. Teen signs in and creates/saves family code.
-6. Open parent.html.
-7. Parent signs in and enters same family code.
+5. Enter teen name.
+6. Generate/save family code.
+7. Open parent.html.
+8. Enter parent name.
+9. Enter the same family code.
 
-## URLs
+## Firebase setting needed
 
-Teen:
+Go to Firebase Console:
 
-https://jjwall101-lgtm.github.io/teen.html
+Authentication -> Sign-in method -> Anonymous -> Enable -> Save
 
-Parent:
-
-https://jjwall101-lgtm.github.io/parent.html
-
-## Android app later
-
-Use PWABuilder twice:
-
-Teen URL:
-https://jjwall101-lgtm.github.io/teen.html
-
-Parent URL:
-https://jjwall101-lgtm.github.io/parent.html
+This keeps the app simple for users. They only use the family code.

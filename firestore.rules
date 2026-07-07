@@ -11,11 +11,6 @@ service cloud.firestore {
         && exists(/databases/$(database)/documents/families/$(familyId)/members/$(request.auth.uid));
     }
 
-    match /users/{userId} {
-      allow create: if signedIn() && request.auth.uid == userId;
-      allow read, update, delete: if signedIn() && request.auth.uid == userId;
-    }
-
     match /families/{familyId} {
       allow create: if signedIn();
       allow read, update: if isFamilyMember(familyId);

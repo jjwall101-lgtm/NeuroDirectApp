@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
   <meta name="theme-color" content="#0B1424">
   <title>NeuroDirect Teen</title>
-  <link rel="manifest" href="manifest-teen.json?v=16">
-  <link rel="icon" href="favicon.ico?v=16">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=16">
-  <link rel="stylesheet" href="style.css?v=16">
+  <link rel="manifest" href="manifest-teen.json?v=17">
+  <link rel="icon" href="favicon.ico?v=17">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=17">
+  <link rel="stylesheet" href="style.css?v=17">
 </head>
 <body>
   <div class="app-shell">
     <header class="topbar">
       <button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span><span></span></button>
       <div class="brand">
-        <img src="logo.png?v=16" alt="NeuroDirect logo" class="brand-logo">
+        <img src="logo.png?v=17" alt="NeuroDirect logo" class="brand-logo">
         <div><h1>NeuroDirect Teen</h1><p>Planning, check-ins and focus</p></div>
       </div>
       <div class="top-actions">
@@ -144,29 +144,37 @@
       </section>
 
       <section class="tab" id="settings">
-        <div class="page-title"><p class="eyebrow">Settings</p><h2>Account and family link.</h2></div>
+        <div class="page-title"><p class="eyebrow">Settings</p><h2>Family link.</h2><p>No account sign-in needed. Just use a family code.</p></div>
+
         <section class="panel auth-box">
-          <div class="section-header"><div><h3>Firebase account</h3><p id="authStatus" class="muted">Not signed in</p></div><span class="pill" id="authPill">Signed out</span></div>
-          <div id="signedOutBox" class="form-grid">
-            <label>Email<input id="emailInput" type="email" autocomplete="email"></label>
-            <label>Password<input id="passwordInput" type="password" autocomplete="current-password"></label>
-            <label class="full">Display name<input id="displayNameInput" placeholder="Teen name or nickname"></label>
-            <div class="button-row full"><button class="primary-button" id="createAccount" type="button">Create account</button><button class="secondary-button" id="signIn" type="button">Sign in</button></div>
-          </div>
-          <div id="signedInBox" class="hidden">
-            <div class="button-row"><button class="primary-button" id="saveProfile" type="button">Save profile</button><button class="danger-button" id="signOut" type="button">Sign out</button></div>
+          <h3>Teen profile</h3>
+          <p class="muted">This name is shown to the parent app when calendar items, check-ins or notifications are created.</p>
+          <label>Teen name or nickname<input id="displayNameInput" placeholder="Example: Alex"></label>
+          <div class="button-row" style="margin-top:1rem;">
+            <button class="primary-button" id="saveName" type="button">Save name</button>
           </div>
         </section>
+
         <section class="panel auth-box" style="margin-top:1rem;">
           <h3>Family code</h3>
-          <p class="muted">Use the same family code in the parent app so both apps can see the same calendar, check-ins and notifications.</p>
+          <p class="muted">Use the same family code in the parent app so both apps link together.</p>
           <label>Family code<input id="familyCodeInput" placeholder="Example: WALL2026"></label>
-          <div class="button-row" style="margin-top:1rem;"><button class="primary-button" id="saveFamilyCode" type="button">Save family code</button><button class="secondary-button" id="generateFamilyCode" type="button">Generate code</button></div>
+          <div class="button-row" style="margin-top:1rem;">
+            <button class="primary-button" id="saveFamilyCode" type="button">Save family code</button>
+            <button class="secondary-button" id="generateFamilyCode" type="button">Generate code</button>
+          </div>
+        </section>
+
+        <section class="panel auth-box" style="margin-top:1rem;">
+          <h3>Connection</h3>
+          <p id="authStatus" class="muted">Starting secure background connection...</p>
+          <span class="pill" id="authPill">Connecting</span>
+          <p class="small-print">Firebase runs in the background. No email or password is needed.</p>
         </section>
       </section>
     </main>
     <div id="toast" class="toast"></div>
   </div>
-  <script type="module" src="teen-app.js?v=16"></script>
-<script>if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js?v=16").catch(() => {}); }</script></body>
+  <script type="module" src="teen-app.js?v=17"></script>
+<script>if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js?v=17").catch(() => {}); }</script></body>
 </html>

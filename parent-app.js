@@ -1,18 +1,19 @@
-import { firebaseConfig } from "./firebase-config.js?v=16";
+import { firebaseConfig } from "./firebase-config.js?v=17";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 import {
-  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
-  signOut, updateProfile, onAuthStateChanged
+  getAuth,
+  signInAnonymously,
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
 import {
-  getFirestore, doc, setDoc, getDoc, collection, query, orderBy, limit, getDocs,
+  getFirestore, doc, setDoc, collection, query, orderBy, limit, getDocs,
   updateDoc, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const STORAGE = "neurodirect_parent_v15";
+const STORAGE = "neurodirect_parent_v17";
 const $ = s => document.querySelector(s);
 const $$ = s => Array.from(document.querySelectorAll(s));
 
@@ -21,36 +22,38 @@ let state = loadState();
 
 function loadState(){try{return JSON.parse(localStorage.getItem(STORAGE)||"{}")}catch{return {}}}
 function saveState(){localStorage.setItem(STORAGE,JSON.stringify(state))}
-function toast(msg){const el=$("#toast");el.textContent=msg;el.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove("show"),2200)}
+function toast(msg){const el=$("#toast");if(!el)return;el.textContent=msg;el.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove("show"),2200)}
 function esc(v){return String(v||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
 function familyCode(){return (state.familyCode||"").trim().toUpperCase()}
+function parentName(){return (state.displayName||"Parent").trim()}
 function setTab(id){$$(".nav-link").forEach(b=>b.classList.toggle("active",b.dataset.tab===id));$$(".tab").forEach(t=>t.classList.toggle("active",t.id===id));$("#sidebar").classList.remove("open");if(id==="calendar")loadCalendar();if(id==="notifications")loadNotifications();if(id==="checkins")loadCheckins();window.scrollTo({top:0,behavior:"smooth"})}
 function updateAuthUI(){
-  const signedIn=!!currentUser;
-  $("#authPill").textContent=signedIn?"Signed in":"Signed out";
-  $("#authStatus").textContent=signedIn?currentUser.email:"Not signed in";
-  $("#signedOutBox").classList.toggle("hidden",signedIn);
-  $("#signedInBox").classList.toggle("hidden",!signedIn);
-  const name=currentUser?.displayName||state.displayName||"Parent";
-  $("#profileName").textContent=signedIn?name:"Parent";
-  $("#avatarInitial").textContent=name.trim().charAt(0).toUpperCase()||"P";
+  const connected=!!currentUser;
+  $("#authPill").textContent=connected?"Connected":"Connecting";
+  $("#authStatus").textContent=connected?"Background Firebase connection active. No sign-in needed.":"Starting secure background connection...";
+  const name=parentName();
+  $("#profileName").textContent=name;
+  $("#avatarInitial").textContent=name.charAt(0).toUpperCase()||"P";
   $("#familyCodeInput").value=state.familyCode||"";
+  $("#displayNameInput").value=state.displayName||"";
   $("#familyCodeLabel").textContent=state.familyCode||"Not linked yet";
 }
-async function saveUserProfile(){
-  if(!currentUser) throw new Error("Sign in first.");
+async function saveFamilyProfile(){
+  if(!currentUser) return;
   const code=familyCode();
-  await setDoc(doc(db,"users",currentUser.uid),{
-    uid:currentUser.uid,email:currentUser.email,displayName:currentUser.displayName||state.displayName||"Parent user",
-    role:"parent",familyCode:code||null,updatedAt:serverTimestamp()
+  if(!code) return;
+
+  await setDoc(doc(db,"families",code),{
+    code,
+    updatedAt:serverTimestamp()
   },{merge:true});
-  if(code){
-    await setDoc(doc(db,"families",code),{code,updatedAt:serverTimestamp()},{merge:true});
-    await setDoc(doc(db,"families",code,"members",currentUser.uid),{
-      uid:currentUser.uid,email:currentUser.email,displayName:currentUser.displayName||state.displayName||"Parent user",
-      role:"parent",updatedAt:serverTimestamp()
-    },{merge:true});
-  }
+
+  await setDoc(doc(db,"families",code,"members",currentUser.uid),{
+    uid:currentUser.uid,
+    displayName:parentName(),
+    role:"parent",
+    updatedAt:serverTimestamp()
+  },{merge:true});
 }
 async function getChildren(){
   if(!familyCode()) return [];
@@ -63,6 +66,7 @@ function formatDate(dateStr,timeStr=""){
 }
 async function loadDashboard(){
   if(!currentUser||!familyCode())return;
+  await saveFamilyProfile();
   const [notifs,events,checkins,members]=await Promise.all([loadNotifications(true),loadCalendar(true),loadCheckins(true),getDocs(collection(db,"families",familyCode(),"members"))]);
   $("#dashUnread").textContent=notifs.filter(n=>!n.read).length;
   $("#dashPlans").textContent=events.length;
@@ -126,14 +130,12 @@ function bind(){
   $$(".nav-link").forEach(b=>b.onclick=()=>setTab(b.dataset.tab));
   $$("[data-go]").forEach(b=>b.onclick=()=>setTab(b.dataset.go));
   $("#themeButton").onclick=()=>{document.documentElement.dataset.theme=document.documentElement.dataset.theme==="dark"?"light":"dark";$("#themeButton").textContent=document.documentElement.dataset.theme==="dark"?"Light":"Dark";}
-  $("#createAccount").onclick=async()=>{try{const email=$("#emailInput").value.trim(),pass=$("#passwordInput").value,name=$("#displayNameInput").value.trim();const cred=await createUserWithEmailAndPassword(auth,email,pass);if(name)await updateProfile(cred.user,{displayName:name});state.displayName=name;saveState();await saveUserProfile();toast("Parent account created")}catch(e){toast(e.message)}};
-  $("#signIn").onclick=async()=>{try{await signInWithEmailAndPassword(auth,$("#emailInput").value.trim(),$("#passwordInput").value);toast("Signed in")}catch(e){toast(e.message)}};
-  $("#signOut").onclick=async()=>{await signOut(auth);toast("Signed out")};
-  $("#saveProfile").onclick=async()=>{try{await saveUserProfile();toast("Profile saved");loadDashboard()}catch(e){toast(e.message)}};
-  $("#saveFamilyCode").onclick=async()=>{state.familyCode=$("#familyCodeInput").value.trim().toUpperCase();saveState();updateAuthUI();try{await saveUserProfile();toast("Family code saved");loadDashboard()}catch(e){toast(e.message)}};
+  $("#saveName").onclick=async()=>{state.displayName=$("#displayNameInput").value.trim()||"Parent";saveState();updateAuthUI();await saveFamilyProfile();toast("Name saved")};
+  $("#saveFamilyCode").onclick=async()=>{state.familyCode=$("#familyCodeInput").value.trim().toUpperCase();saveState();updateAuthUI();try{await saveFamilyProfile();toast("Family code saved");loadDashboard()}catch(e){toast(e.message)}};
   $("#refreshCalendar").onclick=()=>loadCalendar();
   $("#markAllRead").onclick=async()=>{const list=await loadNotifications(true);await Promise.all(list.filter(n=>!n.read).map(n=>updateDoc(doc(db,"families",familyCode(),"notifications",n.id),{read:true,readAt:serverTimestamp()})));toast("Notifications marked read");loadNotifications();loadDashboard();};
   document.addEventListener("click",async e=>{const id=e.target.closest("[data-read]")?.dataset.read;if(id){await updateDoc(doc(db,"families",familyCode(),"notifications",id),{read:true,readAt:serverTimestamp()});toast("Marked read");loadNotifications();loadDashboard();}});
 }
-onAuthStateChanged(auth,async user=>{currentUser=user;if(user){const snap=await getDoc(doc(db,"users",user.uid));if(snap.exists()&&snap.data().familyCode){state.familyCode=snap.data().familyCode;saveState()}await saveUserProfile().catch(()=>{});await loadDashboard().catch(()=>{})}updateAuthUI()});
+onAuthStateChanged(auth,async user=>{currentUser=user;if(user){await saveFamilyProfile().catch(()=>{});await loadDashboard().catch(()=>{})}updateAuthUI()});
+signInAnonymously(auth).catch(err=>toast("Enable Anonymous sign-in in Firebase."));
 bind();updateAuthUI();

@@ -1,46 +1,52 @@
-# NeuroDirect v16 FLAT NO-FOLDERS PACKAGE
+# NeuroDirect v17 FAMILY CODE ONLY
 
-This package has NO folders.
+This is the flat no-folder package with visible Firebase sign-in removed.
 
-Upload every file directly into your GitHub repo root.
+## What changed
 
-## Main files
+- No email sign-in screen.
+- No password sign-in screen.
+- Teen app links using family code only.
+- Parent app links using family code only.
+- Firebase still runs silently in the background using anonymous authentication.
+- Rewards and coins remain removed.
+- Calendar and parent in-app notifications remain included.
 
-- index.html
-- teen.html
-- parent.html
-- style.css
-- teen-app.js
-- parent-app.js
-- firebase-config.js
-- manifest-teen.json
-- manifest-parent.json
-- sw.js
-- firestore.rules
-- logo/icons
+## Upload
 
-## URLs after upload
+Upload every file in this package directly into your GitHub repo root.
 
-Chooser:
+Do not upload the ZIP itself.
 
-https://jjwall101-lgtm.github.io/
+## URLs
 
-Teen app:
+Teen:
 
 https://jjwall101-lgtm.github.io/teen.html
 
-Parent app:
+Parent:
 
 https://jjwall101-lgtm.github.io/parent.html
 
-## Firebase
+## Firebase setup required
 
-Firebase is already configured.
+In Firebase Console, enable:
 
-You still need to publish the updated rules from:
+Authentication -> Sign-in method -> Anonymous
+
+Also publish the updated Firestore rules from:
 
 firestore.rules
 
-## Family linking
+## How linking works
 
-Use the same family code in both apps.
+1. Teen opens teen.html.
+2. Teen enters name.
+3. Teen generates or enters a family code.
+4. Parent opens parent.html.
+5. Parent enters the same family code.
+6. Parent can then see linked calendar items, check-ins and in-app notifications.
+
+## Important
+
+Anyone with the family code can link to that family space. Use a private code.

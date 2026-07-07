@@ -1,9 +1,9 @@
-UPLOAD NOTES — NeuroDirect v16 flat package
+UPLOAD NOTES — NeuroDirect v17
 
-This version has no folders.
+This version has no folders and no visible Firebase sign-in.
 
-Upload ALL files directly into GitHub root.
+Upload every file directly to your GitHub repo root.
 
-Do not upload the ZIP itself.
-
-After upload, GitHub should show teen.html and parent.html in the main file list.
+Then in Firebase:
+1. Enable Anonymous sign-in
+2. Publish firestore.rules
