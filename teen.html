@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
   <meta name="theme-color" content="#0B1424">
   <title>NeuroDirect Teen</title>
-  <link rel="manifest" href="manifest-teen.json?v=23">
-  <link rel="icon" href="favicon.ico?v=23">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=23">
-  <link rel="stylesheet" href="style.css?v=23">
+  <link rel="manifest" href="manifest-teen.json?v=24">
+  <link rel="icon" href="favicon.ico?v=24">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=24">
+  <link rel="stylesheet" href="style.css?v=24">
 </head>
 <body>
   <div class="app-shell">
     <header class="topbar">
       <button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span><span></span></button>
       <div class="brand">
-        <img src="logo.png?v=23" alt="NeuroDirect logo" class="brand-logo">
+        <img src="logo.png?v=24" alt="NeuroDirect logo" class="brand-logo">
         <div><h1>NeuroDirect Teen</h1><p>Planning, check-ins and focus</p></div>
       </div>
       <div class="top-actions">
@@ -43,45 +43,11 @@
         <div><strong>Family code</strong><span id="familyCodeLabel">Not linked yet</span></div>
         <button class="copy-button" id="copyFamilyCode" type="button" aria-label="Copy family code">⧉</button>
       </div>
-      <span class="side-version">v2.3.0</span>
+      <span class="side-version">v2.4.0</span>
     </aside>
 
-    <main class="content">
-      <section class="tab active" id="dashboard">
-        <div class="dashboard-grid">
-          <div class="dashboard-main">
-            <div class="hero">
-              <div>
-                <p class="eyebrow">Today</p>
-                <h2 id="greeting">Build the day in smaller steps.</h2>
-                <p>No coins. No childish rewards. Just planning, tracking and useful support.</p>
-                <div class="button-row">
-                  <button class="primary-button" data-go="checkin">Check in</button>
-                  <button class="secondary-button" data-go="calendar">Plan ahead</button>
-                </div>
-              </div>
-              <div class="panel" style="min-width:210px;">
-                <p class="eyebrow">Next plan</p>
-                <strong id="nextPlanTitle">Nothing planned</strong>
-                <p id="nextPlanTime">Add a calendar item.</p>
-              </div>
-            </div>
-
-            <div class="stats-grid">
-              <article class="stat-card"><span>Mood</span><strong id="dashMood">—</strong><p id="dashMoodHint">No check-in yet.</p></article>
-              <article class="stat-card"><span>Stress</span><strong id="dashStress">—</strong><p>Useful pattern marker.</p></article>
-              <article class="stat-card"><span>Tasks done</span><strong id="dashTasks">0</strong><p>Completed today.</p></article>
-              <article class="stat-card"><span>Plans upcoming</span><strong id="dashPlans">0</strong><p>Calendar items ahead.</p></article>
-            </div>
-
-            <section class="panel">
-              <div class="section-header"><div><p class="eyebrow">Upcoming</p><h3>Next calendar items</h3></div></div>
-              <div id="upcomingList" class="list empty-state">No upcoming plans yet.</div>
-            </section>
-          </div>
-
-          <aside class="dashboard-rail">
-            <section class="mock-hero-card">
+    <aside class="side-dashboard dashboard-rail" id="sideDashboard">
+      <section class="mock-hero-card">
               <h3 id="mockHello">Hello, Teen! 👋</h3>
               <p>Let’s plan your day, check in, and stay focused.</p>
               <div class="landscape" aria-hidden="true">
@@ -120,7 +86,41 @@
                 <p>Start a session</p>
               </div>
             </section>
-          </aside>
+    </aside>
+
+    <main class="content">
+      <section class="tab active" id="dashboard">
+        <div class="dashboard-grid">
+          <div class="dashboard-main">
+            <div class="hero">
+              <div>
+                <p class="eyebrow">Today</p>
+                <h2 id="greeting">Build the day in smaller steps.</h2>
+                <p>No coins. No childish rewards. Just planning, tracking and useful support.</p>
+                <div class="button-row">
+                  <button class="primary-button" data-go="checkin">Check in</button>
+                  <button class="secondary-button" data-go="calendar">Plan ahead</button>
+                </div>
+              </div>
+              <div class="panel" style="min-width:210px;">
+                <p class="eyebrow">Next plan</p>
+                <strong id="nextPlanTitle">Nothing planned</strong>
+                <p id="nextPlanTime">Add a calendar item.</p>
+              </div>
+            </div>
+
+            <div class="stats-grid">
+              <article class="stat-card"><span>Mood</span><strong id="dashMood">—</strong><p id="dashMoodHint">No check-in yet.</p></article>
+              <article class="stat-card"><span>Stress</span><strong id="dashStress">—</strong><p>Useful pattern marker.</p></article>
+              <article class="stat-card"><span>Tasks done</span><strong id="dashTasks">0</strong><p>Completed today.</p></article>
+              <article class="stat-card"><span>Plans upcoming</span><strong id="dashPlans">0</strong><p>Calendar items ahead.</p></article>
+            </div>
+
+            <section class="panel">
+              <div class="section-header"><div><p class="eyebrow">Upcoming</p><h3>Next calendar items</h3></div></div>
+              <div id="upcomingList" class="list empty-state">No upcoming plans yet.</div>
+            </section>
+          </div>
         </div>
       </section>
       <section class="tab" id="checkin">
@@ -261,6 +261,6 @@
     </main>
     <div id="toast" class="toast"></div>
   </div>
-  <script type="module" src="teen-app.js?v=23"></script>
-<script>if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js?v=23").catch(() => {}); }</script></body>
+  <script type="module" src="teen-app.js?v=24"></script>
+<script>if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js?v=24").catch(() => {}); }</script></body>
 </html>

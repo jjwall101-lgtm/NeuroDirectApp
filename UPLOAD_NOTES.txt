@@ -1,21 +1,15 @@
-UPLOAD NOTES — NeuroDirect v23
+UPLOAD NOTES — NeuroDirect v24
 
-This version fixes the awkward family-code setup flow.
-
-Parent can now generate the family code first.
+This version fixes the mock-up layout.
 
 Upload every file directly into GitHub root.
 
-After upload, test:
-
-Parent:
-https://jjwall101-lgtm.github.io/parent.html?v=23
+Test:
 
 Teen:
-https://jjwall101-lgtm.github.io/teen.html?v=23
+https://jjwall101-lgtm.github.io/teen.html?v=24
 
-Recommended test:
-1. Parent -> Settings -> Generate code
-2. Teen -> Settings -> paste same code -> Save
-3. Add a teen calendar item
-4. Check parent dashboard/calendar
+Parent:
+https://jjwall101-lgtm.github.io/parent.html?v=24
+
+The dashboard cards are now in a side panel beside the menu.
