@@ -1,4 +1,4 @@
-# NeuroDirect FULL REWRITE v12
+# NeuroDirect FULL REWRITE v13
 
 One clean GitHub Pages package. Firebase is already configured for project `neurodirect-d62be`.
 
@@ -8,4 +8,4 @@ Required in Firebase Console: Email/Password Authentication enabled, Firestore c
 
 Default parent PIN: `1234`.
 
-Cache: `neurodirect-cache-v12.0.0`.
+Cache: `neurodirect-cache-v13.0.0`.
