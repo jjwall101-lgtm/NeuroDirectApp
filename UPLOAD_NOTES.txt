@@ -1,10 +1,10 @@
-UPLOAD NOTES — NeuroDirect v19
+UPLOAD NOTES — NeuroDirect v20
 
-This version fixes save buttons and Firebase sync.
+This version fixes parent app not showing child data.
 
 Upload every file directly into GitHub root.
 
 Then:
 1. Enable Anonymous sign-in
 2. Publish firestore.rules
-3. Test with a new family code
+3. Test with a brand new family code

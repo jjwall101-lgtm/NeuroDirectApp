@@ -1,4 +1,4 @@
-import { firebaseConfig } from "./firebase-config.js?v=19";
+import { firebaseConfig } from "./firebase-config.js?v=20";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 import {
   getAuth,
@@ -15,27 +15,27 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
-const app = initializeApp(firebaseConfig, "neurodirect-parent-v19");
+const app = initializeApp(firebaseConfig, "neurodirect-parent-v20");
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-const STORAGE = "neurodirect_parent_v19";
+const STORAGE = "neurodirect_parent_v20";
 const $ = s => document.querySelector(s);
 const $$ = s => Array.from(document.querySelectorAll(s));
 
 let currentUser = null;
 let state = loadState();
 
+function defaultState(){
+  return {
+    displayName: "Parent",
+    familyCode: ""
+  };
+}
+
 function loadState(){
-  try {
-    return {
-      displayName: "Parent",
-      familyCode: "",
-      ...JSON.parse(localStorage.getItem(STORAGE) || "{}")
-    };
-  } catch {
-    return { displayName:"Parent", familyCode:"" };
-  }
+  try { return {...defaultState(), ...JSON.parse(localStorage.getItem(STORAGE) || "{}")}; }
+  catch { return defaultState(); }
 }
 
 function saveState(){
@@ -85,7 +85,7 @@ function updateAuthUI(){
 
   $("#authPill").textContent = connected ? "Connected" : "Connecting";
   $("#authStatus").textContent = connected
-    ? "Background Firebase connection active. No sign-in needed."
+    ? "Background connection active. Parent app reads from the family code."
     : "Starting secure background connection...";
 
   const name = parentName();
@@ -97,7 +97,7 @@ function updateAuthUI(){
 }
 
 async function saveFamilyProfile(){
-  if(!currentUser) throw new Error("Background connection is still starting.");
+  if(!currentUser) throw new Error("Firebase is still connecting.");
   const code = familyCode();
   if(!code) throw new Error("Enter the family code first.");
 
@@ -114,12 +114,6 @@ async function saveFamilyProfile(){
   }, {merge:true});
 }
 
-async function getChildren(){
-  if(!familyCode()) return [];
-  const snap = await getDocs(collection(db, "families", familyCode(), "children"));
-  return snap.docs.map(d => ({id:d.id, ...d.data()}));
-}
-
 function formatDate(dateStr, timeStr=""){
   const d = new Date(`${dateStr}T${timeStr || "00:00"}`);
   return new Intl.DateTimeFormat("en-GB", {
@@ -127,6 +121,19 @@ function formatDate(dateStr, timeStr=""){
     day:"2-digit",
     month:"short"
   }).format(d);
+}
+
+async function readFamilyCollection(name){
+  if(!currentUser || !familyCode()) return [];
+
+  try{
+    const snap = await getDocs(collection(db, "families", familyCode(), name));
+    return snap.docs.map(d => ({id:d.id, ...d.data()}));
+  }catch(err){
+    console.error(err);
+    toast(`Could not load ${name}. Check Firestore rules.`);
+    return [];
+  }
 }
 
 async function loadDashboard(){
@@ -139,13 +146,13 @@ async function loadDashboard(){
       loadNotifications(true),
       loadCalendar(true),
       loadCheckins(true),
-      getDocs(collection(db, "families", familyCode(), "members"))
+      readFamilyCollection("members")
     ]);
 
     $("#dashUnread").textContent = notifs.filter(n => !n.read).length;
     $("#dashPlans").textContent = events.length;
     $("#dashCheckins").textContent = checkins.length;
-    $("#dashMembers").textContent = members.size;
+    $("#dashMembers").textContent = members.length;
 
     renderNotifications("#latestNotifications", notifs.slice(0,4));
   }catch(err){
@@ -155,21 +162,11 @@ async function loadDashboard(){
 }
 
 async function loadNotifications(summaryOnly=false){
-  if(!familyCode()) return [];
+  const list = await readFamilyCollection("notifications");
+  list.sort((a,b) => (b.createdAtIso || "").localeCompare(a.createdAtIso || ""));
 
-  try{
-    const snap = await getDocs(collection(db, "families", familyCode(), "notifications"));
-    const list = snap.docs
-      .map(d => ({id:d.id, ...d.data()}))
-      .sort((a,b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
-
-    if(!summaryOnly) renderNotifications("#notificationList", list);
-    return list;
-  }catch(err){
-    console.error(err);
-    if(!summaryOnly) renderNotifications("#notificationList", []);
-    return [];
-  }
+  if(!summaryOnly) renderNotifications("#notificationList", list);
+  return list;
 }
 
 function renderNotifications(selector, list){
@@ -187,34 +184,18 @@ function renderNotifications(selector, list){
     <div class="item ${n.read ? "" : "notification-unread"}">
       <div>
         <strong>${esc(n.title || "Notification")}</strong>
-        <small>${esc(n.childName || "Teen")} · ${n.createdAt?.toDate ? n.createdAt.toDate().toLocaleString("en-GB") : ""}</small>
+        <small>${esc(n.childName || "Teen")} · ${n.createdAtIso ? new Date(n.createdAtIso).toLocaleString("en-GB") : ""}</small>
         <p>${esc(n.message || "")}</p>
       </div>
-      ${n.read ? '<span class="pill">Read</span>' : `<button class="primary-button small" data-read="${n.id}">Mark read</button>`}
+      ${n.read ? '<span class="pill">Read</span>' : `<button class="primary-button small" data-read="${esc(n.id)}">Mark read</button>`}
     </div>
   `).join("");
 }
 
 async function loadCalendar(summaryOnly=false){
-  const children = await getChildren();
-  const all = [];
-
-  for(const child of children){
-    try{
-      const snap = await getDocs(collection(db, "families", familyCode(), "children", child.id, "calendar"));
-      snap.docs.forEach(d => all.push({
-        id:d.id,
-        childId:child.id,
-        childName:child.displayName || "Teen",
-        ...d.data()
-      }));
-    }catch(err){
-      console.error(err);
-    }
-  }
-
   const today = new Date().toISOString().slice(0,10);
-  const events = all
+
+  const events = (await readFamilyCollection("calendar"))
     .filter(e => e.date >= today)
     .sort((a,b) => (a.date + a.start).localeCompare(b.date + b.start));
 
@@ -238,7 +219,7 @@ function renderCalendar(events){
       <div class="date-pill">${new Date(e.date + "T00:00").getDate()}<span>${new Date(e.date + "T00:00").toLocaleString("en-GB",{month:"short"})}</span></div>
       <div style="flex:1;">
         <strong>${esc(e.title)}</strong>
-        <small>${esc(e.childName)} · ${esc(e.category)} · ${formatDate(e.date,e.start)} · ${esc(e.start || "")} ${e.end ? `- ${esc(e.end)}` : ""}</small>
+        <small>${esc(e.childName || "Teen")} · ${esc(e.category)} · ${formatDate(e.date,e.start)} · ${esc(e.start || "")} ${e.end ? `- ${esc(e.end)}` : ""}</small>
         ${e.details ? `<p>${esc(e.details)}</p>` : ""}
       </div>
     </div>
@@ -246,27 +227,11 @@ function renderCalendar(events){
 }
 
 async function loadCheckins(summaryOnly=false){
-  const children = await getChildren();
-  const all = [];
+  const list = await readFamilyCollection("checkins");
+  list.sort((a,b) => (b.createdAtIso || "").localeCompare(a.createdAtIso || ""));
 
-  for(const child of children){
-    try{
-      const snap = await getDocs(collection(db, "families", familyCode(), "children", child.id, "checkins"));
-      snap.docs.forEach(d => all.push({
-        id:d.id,
-        childId:child.id,
-        childName:child.displayName || "Teen",
-        ...d.data()
-      }));
-    }catch(err){
-      console.error(err);
-    }
-  }
-
-  all.sort((a,b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
-
-  if(!summaryOnly) renderCheckins(all);
-  return all;
+  if(!summaryOnly) renderCheckins(list);
+  return list;
 }
 
 function renderCheckins(list){
@@ -284,7 +249,7 @@ function renderCheckins(list){
     <div class="item">
       <div>
         <strong>${esc(c.mood || "Check-in")}</strong>
-        <small>${esc(c.childName)} · Stress ${c.stress}/10 · Focus ${c.focus}/10 · ${c.createdAt?.toDate ? c.createdAt.toDate().toLocaleString("en-GB") : ""}</small>
+        <small>${esc(c.childName || "Teen")} · Stress ${c.stress}/10 · Focus ${c.focus}/10 · ${c.createdAtIso ? new Date(c.createdAtIso).toLocaleString("en-GB") : ""}</small>
         ${c.notes ? `<p>${esc(c.notes)}</p>` : ""}
       </div>
       ${c.flagged ? '<span class="pill">Flagged</span>' : ""}
@@ -307,7 +272,8 @@ function bind(){
     saveState();
     updateAuthUI();
     toast("Name saved");
-    if(currentUser && familyCode()) {
+
+    if(currentUser && familyCode()){
       await saveFamilyProfile().catch(err => {
         console.error(err);
         toast("Name saved locally. Firebase sync failed.");
@@ -325,20 +291,26 @@ function bind(){
     try{
       await saveFamilyProfile();
       await loadDashboard();
+      toast("Family code linked");
     }catch(err){
       console.error(err);
       toast("Family code saved locally. Firebase sync failed.");
     }
   };
 
-  $("#refreshCalendar").onclick = () => loadCalendar();
+  $("#refreshCalendar").onclick = async () => {
+    await loadCalendar();
+    await loadDashboard();
+  };
 
   $("#markAllRead").onclick = async () => {
     const list = await loadNotifications(true);
+
     await Promise.all(list.filter(n => !n.read).map(n =>
       updateDoc(doc(db, "families", familyCode(), "notifications", n.id), {
-        read:true,
-        readAt:serverTimestamp()
+        read: true,
+        readAtIso: new Date().toISOString(),
+        updatedAt: serverTimestamp()
       })
     )).catch(console.error);
 
@@ -349,10 +321,12 @@ function bind(){
 
   document.addEventListener("click", async e => {
     const id = e.target.closest("[data-read]")?.dataset.read;
+
     if(id){
       await updateDoc(doc(db, "families", familyCode(), "notifications", id), {
-        read:true,
-        readAt:serverTimestamp()
+        read: true,
+        readAtIso: new Date().toISOString(),
+        updatedAt: serverTimestamp()
       }).catch(console.error);
 
       toast("Marked read");

@@ -1,23 +1,21 @@
-# NeuroDirect v19 SAVE BUTTON + SYNC FIX
+# NeuroDirect v20 DIRECT FAMILY SYNC
 
 Flat no-folder package.
 
-## Fixed in v19
+## Fixed in v20
 
-- Save buttons now save locally first.
-- Firebase sync happens in the background.
-- Teen and parent use separate hidden anonymous Firebase identities, even on the same phone/browser.
-- Firestore rules are simplified for family-code linking.
-- Calendar, tasks and check-ins should no longer disappear if Firebase sync fails.
-- Parent app reads calendar, check-ins and notifications from the shared family code.
+- Child data now writes directly to the shared family-code space.
+- Parent app now reads directly from that same family-code space.
+- No more relying on the parent discovering a child profile first.
+- Calendar, check-ins, tasks and notifications use:
+  - families/{familyCode}/calendar
+  - families/{familyCode}/checkins
+  - families/{familyCode}/tasks
+  - families/{familyCode}/notifications
+- Saves still happen locally first.
+- Firebase sync then mirrors the data to the shared family code.
 
-## Upload
-
-Upload every file directly into your GitHub repo root.
-
-Do not upload the ZIP itself.
-
-## Firebase required
+## Required Firebase steps
 
 1. Authentication -> Sign-in method -> Anonymous -> Enabled
 2. Firestore Database -> Rules -> paste firestore.rules -> Publish
@@ -25,11 +23,11 @@ Do not upload the ZIP itself.
 ## Test links
 
 Teen:
-https://jjwall101-lgtm.github.io/teen.html?v=19
+https://jjwall101-lgtm.github.io/teen.html?v=20
 
 Parent:
-https://jjwall101-lgtm.github.io/parent.html?v=19
+https://jjwall101-lgtm.github.io/parent.html?v=20
 
 ## Important
 
-After uploading v19, use a new family code for testing.
+After uploading v20, use a brand new family code for testing.

@@ -6,9 +6,6 @@ service cloud.firestore {
       return request.auth != null;
     }
 
-    // Family-code-only version.
-    // Anonymous Firebase users can read/write family data after the app connects.
-    // Keep family codes private.
     match /families/{familyId} {
       allow read, write: if signedIn();
 
