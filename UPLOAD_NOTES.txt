@@ -1,11 +1,11 @@
-UPLOAD NOTES — NeuroDirect v28
+UPLOAD NOTES — NeuroDirect v29
 
-This version fixes the Parent dashboard scrolling issue.
+This version removes the v28 mixed-tab problem and applies a targeted Parent dashboard scroll fix.
 
 Upload every file directly into GitHub root.
 
 Teen:
-https://jjwall101-lgtm.github.io/teen.html?v=28
+https://jjwall101-lgtm.github.io/teen.html?v=29
 
 Parent:
-https://jjwall101-lgtm.github.io/parent.html?v=28
+https://jjwall101-lgtm.github.io/parent.html?v=29

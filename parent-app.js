@@ -1,4 +1,4 @@
-import { firebaseConfig } from "./firebase-config.js?v=28";
+import { firebaseConfig } from "./firebase-config.js?v=29";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 import {
   getAuth,
@@ -15,7 +15,7 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
-const app = initializeApp(firebaseConfig, "neurodirect-parent-v28");
+const app = initializeApp(firebaseConfig, "neurodirect-parent-v29");
 const auth = getAuth(app);
 const db = getFirestore(app);
 

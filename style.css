@@ -1675,129 +1675,72 @@ body.menu-open{
 
 
 /* ---------------------------------------------------------
-   v28 PARENT DASHBOARD SCROLL FIX
-   Parent dashboard needed explicit mobile scroll behaviour.
+   v29 TARGETED PARENT DASHBOARD SCROLL FIX
+   Built from v27 to remove the v28 layout bleed/mixed tabs.
+   This only adjusts the Parent dashboard scroll area.
 --------------------------------------------------------- */
 
-html,
-body{
-  height:auto !important;
-  min-height:100%;
-  overflow-x:hidden;
-  overflow-y:auto !important;
+/* Keep tab behaviour strict */
+.tab{
+  display:none;
 }
 
-.app-shell{
-  min-height:100dvh;
-  height:auto;
+.tab.active{
+  display:block;
 }
 
-.content{
-  height:auto !important;
-  min-height:calc(100dvh - 92px);
-  overflow:visible !important;
+/* Parent-only dashboard scroll spacing */
+.parent-app .content{
+  overflow:visible;
 }
 
-.tab,
-.tab.active,
-.dashboard-grid,
-.dashboard-main{
-  height:auto !important;
+.parent-app #dashboard.tab.active{
+  display:block;
+  overflow:visible;
+  padding-bottom:8rem;
+}
+
+.parent-app #dashboard .dashboard-grid,
+.parent-app #dashboard .dashboard-main{
+  overflow:visible;
   min-height:0;
-  overflow:visible !important;
-}
-
-/* Parent dashboard page now always has safe bottom spacing */
-#dashboard{
-  padding-bottom:7rem;
 }
 
 @media(max-width:980px){
-  .app-shell{
-    display:block;
-    min-height:100dvh;
-    height:auto;
-    overflow:visible !important;
-  }
-
-  .topbar{
-    position:sticky;
-    top:0;
-  }
-
-  .content{
-    display:block;
-    width:100%;
+  .parent-app .content{
     min-height:calc(100dvh - 82px);
-    height:auto !important;
-    overflow:visible !important;
+    overflow:visible;
     padding-bottom:8rem;
   }
 
-  #dashboard{
-    display:block;
+  .parent-app #dashboard.tab.active{
     min-height:calc(100dvh - 82px);
-    height:auto !important;
-    overflow:visible !important;
+    overflow:visible;
     padding-bottom:9rem;
   }
 
-  #dashboard .dashboard-grid,
-  #dashboard .dashboard-main{
-    display:block;
-    height:auto !important;
-    min-height:0;
-    overflow:visible !important;
-  }
-
-  #dashboard .hero,
-  #dashboard .stats-grid,
-  #dashboard .panel{
+  .parent-app #dashboard .hero,
+  .parent-app #dashboard .stats-grid,
+  .parent-app #dashboard .panel{
     overflow:visible;
   }
 
-  .sidebar{
-    position:fixed;
-    overflow-y:auto !important;
-    overflow-x:hidden;
-    -webkit-overflow-scrolling:touch;
-  }
-
-  .side-dashboard{
-    position:fixed;
-    overflow-y:auto !important;
+  .parent-app .sidebar,
+  .parent-app .side-dashboard,
+  .teen-app .sidebar,
+  .teen-app .side-dashboard{
+    overflow-y:auto;
     overflow-x:hidden;
     -webkit-overflow-scrolling:touch;
   }
 }
 
 @media(max-width:620px){
-  .content{
+  .parent-app .content{
     padding-bottom:9rem;
   }
 
-  #dashboard{
+  .parent-app #dashboard.tab.active{
     padding-bottom:10rem;
   }
-
-  .hero{
-    margin-bottom:1rem;
-  }
-
-  .stats-grid{
-    margin-bottom:1rem;
-  }
-}
-
-/* Parent-specific extra guard */
-body:has(.parent-app) .content,
-body:has(#dashboardNotifications) .content{
-  overflow:visible !important;
-  height:auto !important;
-}
-
-body:has(#dashboardNotifications) #dashboard{
-  overflow:visible !important;
-  height:auto !important;
-  min-height:calc(100dvh - 82px);
 }
