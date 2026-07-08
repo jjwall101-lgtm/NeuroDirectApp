@@ -1,4 +1,4 @@
-import { firebaseConfig } from "./firebase-config.js?v=29";
+import { firebaseConfig } from "./firebase-config.js?v=30";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 import {
   getAuth,
@@ -15,7 +15,7 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
-const app = initializeApp(firebaseConfig, "neurodirect-parent-v29");
+const app = initializeApp(firebaseConfig, "neurodirect-parent-v30");
 const auth = getAuth(app);
 const db = getFirestore(app);
 
@@ -31,7 +31,8 @@ function defaultState(){
     displayName: "Parent",
     familyCode: "",
     accent: "red",
-    mode: "light"
+    mode: "light",
+    calendarMonth: new Date().toISOString().slice(0,7)
   };
 }
 
@@ -271,17 +272,86 @@ function renderNotifications(selector, list){
   `).join("");
 }
 
+
+function monthKeyFromDate(d){
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
+}
+
+function getMonthCursor(){
+  const raw = state.calendarMonth || new Date().toISOString().slice(0,7);
+  const [y,m] = raw.split("-").map(Number);
+  return new Date(y || new Date().getFullYear(), (m || new Date().getMonth()+1) - 1, 1);
+}
+
+function moveCalendarMonth(delta){
+  const d = getMonthCursor();
+  d.setMonth(d.getMonth() + delta);
+  state.calendarMonth = monthKeyFromDate(d);
+  saveState();
+  renderMonthCalendar(Array.isArray(state.events) ? state.events : []);
+}
+
+function renderMonthCalendar(events){
+  const grid = $("#monthCalendar");
+  const title = $("#monthTitle");
+  if(!grid || !title) return;
+
+  const cursor = getMonthCursor();
+  const year = cursor.getFullYear();
+  const month = cursor.getMonth();
+  const monthKey = monthKeyFromDate(cursor);
+  const todayKey = new Date().toISOString().slice(0,10);
+
+  title.textContent = cursor.toLocaleString("en-GB", {month:"long", year:"numeric"});
+
+  const byDay = {};
+  events.forEach(e => {
+    if(!e.date || !e.date.startsWith(monthKey)) return;
+    byDay[e.date] = byDay[e.date] || [];
+    byDay[e.date].push(e);
+  });
+
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const first = new Date(year, month, 1);
+  const startOffset = (first.getDay() + 6) % 7;
+  const dows = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+
+  let html = dows.map(d => `<div class="month-dow">${d}</div>`).join("");
+  for(let i=0;i<startOffset;i++) html += `<div class="month-blank"></div>`;
+
+  for(let day=1; day<=daysInMonth; day++){
+    const key = `${monthKey}-${String(day).padStart(2,"0")}`;
+    const items = byDay[key] || [];
+    const classes = [
+      "month-day",
+      items.length ? "has-event" : "",
+      key === todayKey ? "today" : ""
+    ].filter(Boolean).join(" ");
+
+    html += `
+      <div class="${classes}">
+        <strong>${day}</strong>
+        <span>${items.length ? `${items.length} plan${items.length === 1 ? "" : "s"}` : ""}</span>
+      </div>
+    `;
+  }
+
+  grid.innerHTML = html;
+}
+
 async function loadCalendar(summaryOnly=false){
   const today = new Date().toISOString().slice(0,10);
 
-  const events = (await readFamilyCollection("calendar"))
-    .filter(e => e.date >= today)
-    .sort((a,b) => (a.date + a.start).localeCompare(b.date + b.start));
-  state.events = events;
+  const allEvents = (await readFamilyCollection("calendar"))
+    .sort((a,b) => ((a.date || "") + (a.start || "")).localeCompare((b.date || "") + (b.start || "")));
 
-  if(!summaryOnly) renderCalendar(events);
+  const upcoming = allEvents.filter(e => !e.date || e.date >= today);
+  state.events = allEvents;
+
+  renderMonthCalendar(allEvents);
+  if(!summaryOnly) renderCalendar(upcoming);
   updateParentRail();
-  return events;
+  return upcoming;
 }
 
 function renderCalendar(events){
@@ -450,6 +520,17 @@ function bind(){
       toast("Family code created and copied. Enter it in the Teen app.");
     };
   }
+
+  const prevMonth = $("#prevMonth");
+  const nextMonth = $("#nextMonth");
+  const todayMonth = $("#todayMonth");
+  if(prevMonth) prevMonth.onclick = () => moveCalendarMonth(-1);
+  if(nextMonth) nextMonth.onclick = () => moveCalendarMonth(1);
+  if(todayMonth) todayMonth.onclick = () => {
+    state.calendarMonth = new Date().toISOString().slice(0,7);
+    saveState();
+    renderMonthCalendar(Array.isArray(state.events) ? state.events : []);
+  };
 
   $("#refreshCalendar").onclick = async () => {
     await loadCalendar();

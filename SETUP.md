@@ -1,4 +1,4 @@
-# NeuroDirect v29 setup
+# NeuroDirect v30 setup
 
 ## Simple setup
 
@@ -8,19 +8,26 @@
 4. Open:
 
 Teen:
-https://jjwall101-lgtm.github.io/teen.html?v=29
+https://jjwall101-lgtm.github.io/teen.html?v=30
 
 Parent:
-https://jjwall101-lgtm.github.io/parent.html?v=29
+https://jjwall101-lgtm.github.io/parent.html?v=30
 
-## What to check
+## What to test
 
-1. Teen app: each tab should show only its own screen.
-2. Parent app: each tab should show only its own screen.
-3. Parent dashboard should scroll.
-4. Menu/cards should stay side-by-side on phone.
-5. Sync should still work.
+1. Teen Check-in:
+   - Stress, Focus and Energy should show as 5/10 on one line.
+2. Teen Calendar:
+   - Full month view should show.
+   - Tapping a day should set the event date.
+3. Parent Calendar:
+   - Full month view should show.
+4. Teen Dashboard:
+   - Press Help.
+   - Tap one help option.
+5. Parent App:
+   - Check Notifications for the Help request.
 
 ## Firebase
 
-No Firebase change is required.
+No Firebase setup change is required.

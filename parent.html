@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
   <meta name="theme-color" content="#0B1424">
   <title>NeuroDirect Parent</title>
-  <link rel="manifest" href="manifest-parent.json?v=29">
-  <link rel="icon" href="favicon.ico?v=29">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=29">
-  <link rel="stylesheet" href="style.css?v=29">
+  <link rel="manifest" href="manifest-parent.json?v=30">
+  <link rel="icon" href="favicon.ico?v=30">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=30">
+  <link rel="stylesheet" href="style.css?v=30">
 </head>
 <body class="parent-app">
   <div class="app-shell">
     <header class="topbar">
       <button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span><span></span></button>
       <div class="brand">
-        <img src="logo.png?v=29" alt="NeuroDirect logo" class="brand-logo">
+        <img src="logo.png?v=30" alt="NeuroDirect logo" class="brand-logo">
         <div><h1>NeuroDirect Parent</h1><p>Overview, plans and notifications</p></div>
       </div>
       <div class="top-actions">
@@ -41,7 +41,7 @@
         <div><strong>Family code</strong><span id="familyCodeLabel">Not linked yet</span></div>
         <button class="copy-button" id="copyFamilyCode" type="button" aria-label="Copy family code">⧉</button>
       </div>
-      <span class="side-version">v2.9.0</span>
+      <span class="side-version">v3.0.0</span>
     </aside>
 
     <aside class="side-dashboard dashboard-rail" id="sideDashboard">
@@ -123,7 +123,21 @@
       </section>
       <section class="tab" id="calendar">
         <div class="page-title"><p class="eyebrow">Calendar</p><h2>Child plans.</h2><p>Read-only view of teen calendar items.</p></div>
-        <section class="panel"><div class="section-header"><h3>Upcoming plans</h3><button class="secondary-button small" id="refreshCalendar" type="button">Refresh</button></div><div id="calendarList" class="day-list empty-state">No calendar items yet.</div></section>
+        <section class="panel month-panel">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">Month view</p>
+              <h3 id="monthTitle">This month</h3>
+            </div>
+            <div class="button-row">
+              <button class="secondary-button small" id="prevMonth" type="button">Prev</button>
+              <button class="secondary-button small" id="todayMonth" type="button">Today</button>
+              <button class="secondary-button small" id="nextMonth" type="button">Next</button>
+            </div>
+          </div>
+          <div class="month-calendar" id="monthCalendar"></div>
+        </section>
+        <section class="panel" style="margin-top:1rem;"><div class="section-header"><h3>Upcoming plans</h3><button class="secondary-button small" id="refreshCalendar" type="button">Refresh</button></div><div id="calendarList" class="day-list empty-state">No calendar items yet.</div></section>
       </section>
 
       <section class="tab" id="notifications">
@@ -204,6 +218,6 @@
     </main>
     <div id="toast" class="toast"></div>
   </div>
-  <script type="module" src="parent-app.js?v=29"></script>
-<script>if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js?v=29").catch(() => {}); }</script></body>
+  <script type="module" src="parent-app.js?v=30"></script>
+<script>if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js?v=30").catch(() => {}); }</script></body>
 </html>

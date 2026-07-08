@@ -1,37 +1,47 @@
-# NeuroDirect v29 TARGETED PARENT SCROLL FIX
+# NeuroDirect v30 HELP + MONTH CALENDAR
 
 Flat no-folder package.
 
-## Why v29 exists
+## What changed
 
-v28 fixed scrolling too aggressively and caused layout bleed/mixed tabs.
+v30 adds:
 
-v29 is rebuilt from the cleaner v27 version and applies only a targeted Parent dashboard scroll fix.
+- Fix for slider values so they show as 5/10 on one line
+- Full month calendar view in the Teen calendar tab
+- Full month calendar view in the Parent calendar tab
+- Help button on the Teen dashboard
+- Help request options that do not require talking
+- Parent notification when a Help option is selected
 
-## What v29 keeps
+## Help options
 
-- v26/v27 side-by-side menu/cards layout
+Teen can tap:
+
+- Quiet space
+- Less noise
+- Break
+- Food / water / movement
+- Help starting
+- Talk later
+
+The Parent app receives an in-app notification.
+
+## Keeps working
+
+- Firebase family-code sync
 - Parent-created family code
-- Working Firebase sync
-- Red/default theme and Settings theme controls
+- Side-by-side menu/card layout
+- Theme settings
 - Light/Dark mode
 - Flat GitHub upload structure
-
-## What v29 fixes
-
-- Removes the v28 mixed-tab/layout bleed
-- Parent dashboard gets targeted scroll spacing
-- Main app tab behaviour is forced back to normal:
-  - inactive tabs hidden
-  - active tab shown
 
 ## Test links
 
 Teen:
-https://jjwall101-lgtm.github.io/teen.html?v=29
+https://jjwall101-lgtm.github.io/teen.html?v=30
 
 Parent:
-https://jjwall101-lgtm.github.io/parent.html?v=29
+https://jjwall101-lgtm.github.io/parent.html?v=30
 
 ## Upload
 

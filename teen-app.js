@@ -1,4 +1,4 @@
-import { firebaseConfig } from "./firebase-config.js?v=29";
+import { firebaseConfig } from "./firebase-config.js?v=30";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 import {
   getAuth,
@@ -16,7 +16,7 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
-const app = initializeApp(firebaseConfig, "neurodirect-teen-v29");
+const app = initializeApp(firebaseConfig, "neurodirect-teen-v30");
 const auth = getAuth(app);
 const db = getFirestore(app);
 
@@ -36,7 +36,8 @@ function defaultState(){
     mode: "light",
     localTasks: [],
     localEvents: [],
-    localCheckins: []
+    localCheckins: [],
+    calendarMonth: new Date().toISOString().slice(0,7)
   };
 }
 
@@ -325,12 +326,120 @@ function renderTaskList(){
   `).join("");
 }
 
+
+function monthKeyFromDate(d){
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
+}
+
+function getMonthCursor(){
+  const raw = state.calendarMonth || new Date().toISOString().slice(0,7);
+  const [y,m] = raw.split("-").map(Number);
+  return new Date(y || new Date().getFullYear(), (m || new Date().getMonth()+1) - 1, 1);
+}
+
+function moveCalendarMonth(delta){
+  const d = getMonthCursor();
+  d.setMonth(d.getMonth() + delta);
+  state.calendarMonth = monthKeyFromDate(d);
+  saveState();
+  renderCalendarPage();
+}
+
+function renderMonthCalendar(events){
+  const grid = $("#monthCalendar");
+  const title = $("#monthTitle");
+  if(!grid || !title) return;
+
+  const cursor = getMonthCursor();
+  const year = cursor.getFullYear();
+  const month = cursor.getMonth();
+  const monthKey = monthKeyFromDate(cursor);
+  const todayKey = new Date().toISOString().slice(0,10);
+  const selectedDate = $("#eventDate")?.value || "";
+
+  title.textContent = cursor.toLocaleString("en-GB", {month:"long", year:"numeric"});
+
+  const byDay = {};
+  events.forEach(e => {
+    if(!e.date || !e.date.startsWith(monthKey)) return;
+    byDay[e.date] = byDay[e.date] || [];
+    byDay[e.date].push(e);
+  });
+
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const first = new Date(year, month, 1);
+  const startOffset = (first.getDay() + 6) % 7;
+  const dows = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+
+  let html = dows.map(d => `<div class="month-dow">${d}</div>`).join("");
+  for(let i=0;i<startOffset;i++) html += `<div class="month-blank"></div>`;
+
+  for(let day=1; day<=daysInMonth; day++){
+    const key = `${monthKey}-${String(day).padStart(2,"0")}`;
+    const items = byDay[key] || [];
+    const classes = [
+      "month-day",
+      items.length ? "has-event" : "",
+      key === todayKey ? "today" : "",
+      key === selectedDate ? "selected" : ""
+    ].filter(Boolean).join(" ");
+
+    html += `
+      <button class="${classes}" type="button" data-date-pick="${key}">
+        <strong>${day}</strong>
+        <span>${items.length ? `${items.length} plan${items.length === 1 ? "" : "s"}` : ""}</span>
+      </button>
+    `;
+  }
+
+  grid.innerHTML = html;
+}
+
+async function sendHelpRequest(type, label){
+  if(!familyCode()){
+    toast("Set a family code first.");
+    setTab("settings");
+    return;
+  }
+
+  if(!currentUser){
+    toast("Still connecting. Try again in a moment.");
+    return;
+  }
+
+  const id = makeId("help");
+
+  try{
+    const code = familyDoc();
+    await saveFamilyProfile();
+
+    await setDoc(doc(db, "families", code, "notifications", id), {
+      id,
+      type: "help",
+      helpType: type,
+      title: "Help requested",
+      message: `${teenName()} requested help: ${label}.`,
+      childUid: currentUser.uid,
+      childName: teenName(),
+      read: false,
+      createdAtIso: new Date().toISOString(),
+      updatedAt: serverTimestamp()
+    }, {merge:true});
+
+    toast("Help request sent to parent");
+  }catch(err){
+    console.error(err);
+    toast("Could not send help request. Check connection.");
+  }
+}
+
 function renderCalendarPage(){
   const today = new Date().toISOString().slice(0,10);
   const events = state.localEvents
     .filter(e => e.date >= today)
     .sort((a,b) => (a.date + a.start).localeCompare(b.date + b.start));
 
+  renderMonthCalendar(state.localEvents);
   renderEventList("#calendarList", events, true);
 }
 
@@ -447,6 +556,24 @@ function bind(){
   if(copyFamilyCodeSettings) copyFamilyCodeSettings.onclick = copyFamilyCodeValue;
 
   ["stress","focus","energy"].forEach(n => $(`#${n}Input`).oninput = updateRanges);
+
+  const helpJump = $("#helpJump");
+  if(helpJump){
+    helpJump.onclick = () => {
+      $("#helpPanel")?.scrollIntoView({behavior:"smooth", block:"center"});
+    };
+  }
+
+  const prevMonth = $("#prevMonth");
+  const nextMonth = $("#nextMonth");
+  const todayMonth = $("#todayMonth");
+  if(prevMonth) prevMonth.onclick = () => moveCalendarMonth(-1);
+  if(nextMonth) nextMonth.onclick = () => moveCalendarMonth(1);
+  if(todayMonth) todayMonth.onclick = () => {
+    state.calendarMonth = new Date().toISOString().slice(0,7);
+    saveState();
+    renderCalendarPage();
+  };
 
   $("#saveName").onclick = async () => {
     state.displayName = $("#displayNameInput").value.trim() || "Teen";
@@ -632,6 +759,23 @@ function bind(){
     const delTask = e.target.closest("[data-delete-task]")?.dataset.deleteTask;
     const delEvent = e.target.closest("[data-delete-event]")?.dataset.deleteEvent;
     const edit = e.target.closest("[data-edit-event]")?.dataset.editEvent;
+    const datePick = e.target.closest("[data-date-pick]")?.dataset.datePick;
+    const helpButton = e.target.closest("[data-help-type]");
+
+    if(helpButton){
+      await sendHelpRequest(helpButton.dataset.helpType, helpButton.dataset.helpLabel || helpButton.textContent.trim());
+      return;
+    }
+
+    if(datePick){
+      const dateInput = $("#eventDate");
+      if(dateInput){
+        dateInput.value = datePick;
+        renderCalendarPage();
+        $("#eventForm")?.scrollIntoView({behavior:"smooth", block:"start"});
+      }
+      return;
+    }
 
     if(done){
       const item = state.localTasks.find(t => t.id === done);

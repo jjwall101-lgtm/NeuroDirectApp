@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
   <meta name="theme-color" content="#0B1424">
   <title>NeuroDirect Teen</title>
-  <link rel="manifest" href="manifest-teen.json?v=29">
-  <link rel="icon" href="favicon.ico?v=29">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=29">
-  <link rel="stylesheet" href="style.css?v=29">
+  <link rel="manifest" href="manifest-teen.json?v=30">
+  <link rel="icon" href="favicon.ico?v=30">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=30">
+  <link rel="stylesheet" href="style.css?v=30">
 </head>
 <body class="teen-app">
   <div class="app-shell">
     <header class="topbar">
       <button class="menu-button" id="menuButton" type="button" aria-label="Open navigation"><span></span><span></span><span></span></button>
       <div class="brand">
-        <img src="logo.png?v=29" alt="NeuroDirect logo" class="brand-logo">
+        <img src="logo.png?v=30" alt="NeuroDirect logo" class="brand-logo">
         <div><h1>NeuroDirect Teen</h1><p>Planning, check-ins and focus</p></div>
       </div>
       <div class="top-actions">
@@ -43,7 +43,7 @@
         <div><strong>Family code</strong><span id="familyCodeLabel">Not linked yet</span></div>
         <button class="copy-button" id="copyFamilyCode" type="button" aria-label="Copy family code">⧉</button>
       </div>
-      <span class="side-version">v2.9.0</span>
+      <span class="side-version">v3.0.0</span>
     </aside>
 
     <aside class="side-dashboard dashboard-rail" id="sideDashboard">
@@ -99,6 +99,7 @@
                 <p>No coins. No childish rewards. Just planning, tracking and useful support.</p>
                 <div class="button-row">
                   <button class="primary-button" data-go="checkin">Check in</button>
+                  <button class="danger-button" id="helpJump" type="button">Help</button>
                   <button class="secondary-button" data-go="calendar">Plan ahead</button>
                 </div>
               </div>
@@ -108,6 +109,24 @@
                 <p id="nextPlanTime">Add a calendar item.</p>
               </div>
             </div>
+
+            <section class="panel help-panel" id="helpPanel">
+              <div class="section-header">
+                <div>
+                  <p class="eyebrow">Help without talking</p>
+                  <h3>What would help right now?</h3>
+                  <p>Tap one option. The parent app gets a notification.</p>
+                </div>
+              </div>
+              <div class="help-grid">
+                <button class="help-option" type="button" data-help-type="quiet" data-help-label="I need quiet space">🤫<span>Quiet space</span></button>
+                <button class="help-option" type="button" data-help-type="noise" data-help-label="Noise is too much">🎧<span>Less noise</span></button>
+                <button class="help-option" type="button" data-help-type="break" data-help-label="I need a break">⏸️<span>Break</span></button>
+                <button class="help-option" type="button" data-help-type="body" data-help-label="I need food, water or movement">💧<span>Food / water / movement</span></button>
+                <button class="help-option" type="button" data-help-type="task" data-help-label="I need help starting the task">🧩<span>Help starting</span></button>
+                <button class="help-option" type="button" data-help-type="talk-later" data-help-label="I cannot talk yet, please check in later">🕒<span>Talk later</span></button>
+              </div>
+            </section>
 
             <div class="stats-grid">
               <article class="stat-card"><span>Mood</span><strong id="dashMood">—</strong><p id="dashMoodHint">No check-in yet.</p></article>
@@ -129,9 +148,9 @@
           <label>Mood
             <select id="moodInput"><option>Calm</option><option>Okay</option><option>Wired</option><option>Low</option><option>Angry</option><option>Overwhelmed</option></select>
           </label>
-          <label>Stress <span id="stressValue">5</span>/10<input id="stressInput" type="range" min="1" max="10" value="5"></label>
-          <label>Focus <span id="focusValue">5</span>/10<input id="focusInput" type="range" min="1" max="10" value="5"></label>
-          <label>Energy <span id="energyValue">5</span>/10<input id="energyInput" type="range" min="1" max="10" value="5"></label>
+          <label class="range-label"><span class="range-head"><span>Stress</span><strong><span id="stressValue">5</span>/10</strong></span><input id="stressInput" type="range" min="1" max="10" value="5"></label>
+          <label class="range-label"><span class="range-head"><span>Focus</span><strong><span id="focusValue">5</span>/10</strong></span><input id="focusInput" type="range" min="1" max="10" value="5"></label>
+          <label class="range-label"><span class="range-head"><span>Energy</span><strong><span id="energyValue">5</span>/10</strong></span><input id="energyInput" type="range" min="1" max="10" value="5"></label>
           <label class="full">Notes<textarea id="checkinNotes" rows="4" placeholder="What helped or made things harder?"></textarea></label>
           <label class="checkbox-line full"><input type="checkbox" id="flagParent">Flag for parent notification</label>
           <div class="button-row full"><button class="primary-button" type="submit">Save check-in</button></div>
@@ -152,6 +171,21 @@
       <section class="tab" id="calendar">
         <div class="page-title"><p class="eyebrow">Calendar</p><h2>Plan ahead.</h2><p>Add dates, times and details for school, home, appointments and personal plans.</p></div>
         <div class="calendar-grid">
+          <section class="panel full month-panel">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Month view</p>
+                <h3 id="monthTitle">This month</h3>
+              </div>
+              <div class="button-row">
+                <button class="secondary-button small" id="prevMonth" type="button">Prev</button>
+                <button class="secondary-button small" id="todayMonth" type="button">Today</button>
+                <button class="secondary-button small" id="nextMonth" type="button">Next</button>
+              </div>
+            </div>
+            <div class="month-calendar" id="monthCalendar"></div>
+          </section>
+
           <form id="eventForm" class="panel form-grid">
             <label class="full">Title<input id="eventTitle" required placeholder="Example: Maths homework"></label>
             <label>Date<input id="eventDate" type="date" required></label>
@@ -261,6 +295,6 @@
     </main>
     <div id="toast" class="toast"></div>
   </div>
-  <script type="module" src="teen-app.js?v=29"></script>
-<script>if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js?v=29").catch(() => {}); }</script></body>
+  <script type="module" src="teen-app.js?v=30"></script>
+<script>if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js?v=30").catch(() => {}); }</script></body>
 </html>
